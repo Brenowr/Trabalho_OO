@@ -7,7 +7,7 @@ public class Main {
 		String entrada;
 		int selecionar;
 		do{
-			entrada =JOptionPane.showInputDialog("Selecione sua opcao:\n"+ 
+			entrada =JOptionPane.showInputDialog("Selecione sua opcao:\n" +
 													"1:Menu teste a\n" +
 													"2:Menu teste b\n" +
 														"3:Sair");
