@@ -1,7 +1,7 @@
 package br.edu.cafeteria.modelo;
 
 public abstract class Cliente {
-	private String nome,cpf;
+	private String nomeCliente,cpf;
 	private int experiencia;
 	
 	public void adicionarXP(int adicionar)

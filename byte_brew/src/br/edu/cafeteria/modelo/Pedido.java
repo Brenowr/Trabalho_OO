@@ -1,7 +1,7 @@
 package br.edu.cafeteria.modelo;
 
 public class Pedido {
-	private itemPedido itens;
+	private ItemPedido itens;
 	private Cliente cliente;
 
 }
