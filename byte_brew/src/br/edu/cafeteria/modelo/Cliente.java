@@ -4,6 +4,11 @@ public abstract class Cliente {
 	private String nomeCliente,cpf;
 	private int experiencia;
 	
+	public Cliente(String nomeCliente, String cpf) {
+		this.nomeCliente = nomeCliente;
+		this.cpf = cpf;
+	}
+	
 	public void adicionarXP(int adicionar)
 	{
 		experiencia += adicionar;
