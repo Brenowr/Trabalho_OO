@@ -1,15 +1,21 @@
 package br.edu.cafeteria.app;
+import br.edu.cafeteria.modelo.Cliente;
+import br.edu.cafeteria.modelo.ClienteStandard;
+
 import javax.swing.JOptionPane;
 
 public class Main {
 
 	public static void main(String[] args) {
+		Cliente cliente;
+		int xp;
+		double valorCompra;
 		String entrada;
 		int selecionar;
 		do{
 			entrada =JOptionPane.showInputDialog("Selecione sua opcao:\n" +
-													"1:Menu teste a\n" +
-													"2:Menu teste b\n" +
+													"1:Cliente Standard \n" +
+													"2:Cliente Vip \n" +
 														"3:Sair");
 			if(entrada == null){
 				selecionar = 3;
@@ -20,11 +26,18 @@ public class Main {
 			
 			switch(selecionar){
 				case 1:{
-					JOptionPane.showMessageDialog(null,"menu a!");
+					cliente = new ClienteStandard();
+					JOptionPane.showMessageDialog(null,"Cliente Standard!");
+					valorCompra = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor da compra"));
+					cliente.calcularXP(valorCompra);
+					xp = cliente.getExperiencia();
+					JOptionPane.showMessageDialog(null,"sua experiencia ganha foi:" + xp);
+					
+					
 					break;
 				}
 				case 2:{
-					JOptionPane.showMessageDialog(null,"menu b!");
+					JOptionPane.showMessageDialog(null,"Cliente Vip!");
 					break;
 				}
 				default:{
