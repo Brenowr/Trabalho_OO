@@ -12,5 +12,10 @@ public class Pedido {
 		this.codigoPedido++;
 		
 	}
+	
+	public void adicionarItem(ItemPedido item) {
+		itens.add(item); 
+		
+	}
 
 }
