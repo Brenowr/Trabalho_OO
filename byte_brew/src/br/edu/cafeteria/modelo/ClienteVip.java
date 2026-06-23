@@ -13,4 +13,13 @@ public class ClienteVip extends Cliente{
 		valorInt=(int) valorTotal;
 		adicionarXP(valorInt*2);
 	}
+	
+	public boolean gastarXP(double valorPedido) {
+		int xpNecessario = (int) (valorPedido*10);
+		if(getXp() >= xpNecessario) {
+			removerXp(xpNecessario);
+			return true;
+		}
+		return false;
+	}
 }
