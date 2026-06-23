@@ -19,4 +19,8 @@ public abstract class Cliente {
 	 public int getExperiencia() {
 	    return experiencia;
 	}
+
+	 public String getNome() {
+		return nomeCliente;
+	 }
 }

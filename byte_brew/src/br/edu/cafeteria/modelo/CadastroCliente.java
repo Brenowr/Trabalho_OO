@@ -1,4 +1,4 @@
-package br.edu.cafeteria.servico;
+package br.edu.cafeteria.modelo;
 
 public class CadastroCliente {
 

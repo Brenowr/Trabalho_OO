@@ -9,3 +9,4 @@ public class ItemPedido {
 		this.quantidade = quantidade;
 	}
 }
+// erros de estoque e excecoes no geral nao esquecer
