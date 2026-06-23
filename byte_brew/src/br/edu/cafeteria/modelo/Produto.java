@@ -1,5 +1,7 @@
 package br.edu.cafeteria.modelo;
 
+import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
+
 public abstract class Produto {
 	private String nomeProduto;
 	private double precoBase;
@@ -37,6 +39,15 @@ public abstract class Produto {
 	}
 	public int getCodigoProduto() {
 		return codigoProduto;
+	}
+	
+	public void retirarEstoque(int quantidade) throws EstoqueInsuficienteException {
+		if(quantidade > quantidadeEstoque) {
+			EstoqueInsuficienteException estoqueInsuficiente = new EstoqueInsuficienteException("Estoque do produto" + nomeProduto + "insuficiente. Quantidade disponivel: " + quantidadeEstoque);
+			throw estoqueInsuficiente;
+		}
+		
+		this.quantidadeEstoque -= quantidade;
 	}
 	
 }
