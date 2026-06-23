@@ -1,5 +1,6 @@
 package br.edu.cafeteria.modelo;
 import java.util.ArrayList;
+import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
 
 public class Pedido {
 	private ArrayList<ItemPedido> itens;
@@ -14,14 +15,14 @@ public class Pedido {
 		
 	}
 	
-	public void adicionarItem(Produto produto) {
+	public void adicionarItem(Produto produto) throws EstoqueInsuficienteException {
 	adicionarItem(produto,1); 
 		
 	}
 	
-	public void adicionarItem(Produto produto, int quantidade) {
-		itens.add(new ItemPedido(produto, quantidade)); 
-		
+	public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
+		itens.add(new ItemPedido(produto, quantidade));
+		produto.retirarEstoque(quantidade);
 	}
 	
 	public int getCodigoPedido() {
