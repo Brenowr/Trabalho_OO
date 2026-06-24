@@ -1,6 +1,7 @@
 package br.edu.cafeteria.modelo;
 
 import java.util.ArrayList;
+import br.edu.cafeteria.excecao.NomeInvalidoException;
 
 public class CadastroCliente {
 
@@ -19,9 +20,9 @@ public class CadastroCliente {
 			return null;
 		}
 		
-		public boolean cadastrarCliente(Cliente cliente) {
+		public boolean cadastrarCliente(Cliente cliente) throws NomeInvalidoException{
 			if(!nomeValido(cliente.getNome())) {
-				return false;
+				throw new NomeInvalidoException();
 			}
 			
 			if(!cpfValido(cliente.getCpf())) {
@@ -58,14 +59,14 @@ public class CadastroCliente {
 			return true;
 		}
 		
-		public boolean atualizarNomeCliente(String cpf, String novoNome) {
+		public boolean atualizarNomeCliente(String cpf, String novoNome) throws NomeInvalidoException{
 			Cliente cliente = buscarCliente(cpf);
 			
 			if(cliente == null) {
 				return false;
 			}
 			if(!nomeValido(novoNome)) {
-				return false;
+				throw new NomeInvalidoException();
 			}
 			cliente.setNome(novoNome);
 			return true;
