@@ -4,7 +4,6 @@ public class ClienteVip extends Cliente{
 	
 	public ClienteVip(String nomeCliente, String cpf) {
 		super(nomeCliente, cpf);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

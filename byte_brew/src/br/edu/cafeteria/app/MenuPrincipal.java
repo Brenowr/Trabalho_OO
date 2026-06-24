@@ -2,12 +2,32 @@ package br.edu.cafeteria.app;
 
 import javax.swing.JOptionPane;
 
+import br.edu.cafeteria.modelo.CadastroCliente;
+import br.edu.cafeteria.modelo.CadastroProduto;
+import br.edu.cafeteria.modelo.GerenciadorPedidos;
+
 public class MenuPrincipal {
 
     private int selecionar;
     private String entrada;
 
-    public void menuPrincipal() {
+    private GerenciadorPedidos gerenciadorPedidos;
+    private CadastroCliente cadastroCliente;
+    private CadastroProduto cadastroProduto;
+
+    public MenuPrincipal(
+            GerenciadorPedidos gerenciadorPedidos,
+            CadastroCliente cadastroCliente,
+           CadastroProduto cadastroProduto) {
+
+        this.gerenciadorPedidos = gerenciadorPedidos;
+        this.cadastroCliente = cadastroCliente;
+        this.cadastroProduto = cadastroProduto;
+    }
+
+
+	public void menuPrincipal() {
+    	
 
         do {
 
