@@ -17,7 +17,7 @@ public class ClienteVip extends Cliente{
 	public boolean gastarXP(double valorPedido) {
 		int xpNecessario = (int) (valorPedido*10);
 		if(getXp() >= xpNecessario) {
-			removerXp(xpNecessario);
+			removerXP(xpNecessario);
 			return true;
 		}
 		return false;

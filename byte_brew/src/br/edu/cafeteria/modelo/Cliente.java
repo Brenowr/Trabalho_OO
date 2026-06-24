@@ -15,9 +15,17 @@ public abstract class Cliente {
 		xp += adicionar;
 	}
 	
-	public void removerXp(int adicionar) {
+	public void removerXP(int adicionar) {
 		 xp -= adicionar;
 	 }
+	
+	public double calcularDesconto() {
+		 return getXp()/10.0;
+	 }
+	
+	public void usarXPComoDesconto() {
+		removerXP(xp);
+	}
 			
 	public abstract void calcularXP(double valorTotal);
 	

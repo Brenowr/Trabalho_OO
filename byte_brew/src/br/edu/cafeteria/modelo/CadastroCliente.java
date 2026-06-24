@@ -90,8 +90,8 @@ public class CadastroCliente {
 			
 			ClienteVip vip = new ClienteVip(cliente.getNome(), cliente.getCpf());
 			vip.adicionarXP(cliente.getXp());
-			clientes.remove(cliente);
 			clientes.add(vip);
+			clientes.remove(cliente);
 			return true;
 		}
 		
