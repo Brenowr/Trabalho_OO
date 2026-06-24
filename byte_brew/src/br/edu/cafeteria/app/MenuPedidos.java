@@ -1,23 +1,24 @@
 package br.edu.cafeteria.app;
 
 import javax.swing.JOptionPane;
+import br.edu.cafeteria.modelo.GerenciadorPedidos;
 
-public class MenuCliente {
+public class MenuPedidos {
 
     private int selecionar;
     private String entrada;
 
-    public void menuCliente() {
+    public void menuPedidos() {
 
         do {
 
             try {
 
                 entrada = JOptionPane.showInputDialog("Selecione sua opcao:\n" +
-                        							   "1: Cadastrar cliente\n" +
-                        							   "2: Remover cliente\n" +
-                        							   "3: Editar cliente\n" +
-                        							   "4: Listar clientes\n" +
+                        							   "1: Criar Pedido\n" +
+                        							   "2: Remover Pedido\n" +
+                        							   "3: Editar Pedido\n" +
+                        							   "4: Listar Pedido\n" +
                         							   "5: Voltar ao menu Principal"
                 );
 
@@ -35,7 +36,7 @@ public class MenuCliente {
 
                     case 1: {
 
-                        // cadastrarCliente();
+                        // criarPedido();
                         JOptionPane.showMessageDialog(null, "Cadastro");
 
                         break;
@@ -43,7 +44,7 @@ public class MenuCliente {
 
                     case 2: {
 
-                        // removerCliente();
+                        // removerPedido();
                         JOptionPane.showMessageDialog(null, "Remove");
 
                         break;
@@ -51,7 +52,7 @@ public class MenuCliente {
 
                     case 3: {
 
-                        // editarCliente();
+                        // editarPedido();
                         JOptionPane.showMessageDialog(null, "Edita");
 
                         break;
@@ -59,8 +60,9 @@ public class MenuCliente {
 
                     case 4: {
 
-                        // listarCliente();
-                        JOptionPane.showMessageDialog(null, "Lista");
+                        // listarPedido();
+                    	GerenciadorPedidos gerenciadorPedidos = new GerenciadorPedidos();
+                    	JOptionPane.showMessageDialog(null, gerenciadorPedidos.listarPedidos());
 
                         break;
                     }
@@ -86,4 +88,7 @@ public class MenuCliente {
 
         } while (selecionar != 5);
     }
+}
+
+
 }
