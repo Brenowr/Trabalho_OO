@@ -2,12 +2,20 @@ package br.edu.cafeteria.app;
 
 import javax.swing.JOptionPane;
 
-public class MenuCliente {
+import br.edu.cafeteria.modelo.CadastroCliente;
+
+public class MenuClientes {
 
     private int selecionar;
     private String entrada;
+    CadastroCliente cadastroClientes;
+    
+    public MenuClientes(CadastroCliente cadastroClientes) {
 
-    public void menuCliente() {
+        this.cadastroClientes = cadastroClientes;
+    }
+
+    public void menuClientes() {
 
         do {
 

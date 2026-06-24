@@ -7,6 +7,11 @@ public class MenuPedidos {
 
     private int selecionar;
     private String entrada;
+    GerenciadorPedidos gerenciadorPedidos;
+    
+    public MenuPedidos(GerenciadorPedidos gerenciadorPedidos) {
+    	this.gerenciadorPedidos = gerenciadorPedidos;
+    }
 
     public void menuPedidos() {
 
@@ -61,8 +66,7 @@ public class MenuPedidos {
                     case 4: {
 
                         // listarPedido();
-                    	GerenciadorPedidos gerenciadorPedidos = new GerenciadorPedidos();
-                    	JOptionPane.showMessageDialog(null, gerenciadorPedidos.listarPedidos());
+                    	// JOptionPane.showMessageDialog(null, gerenciadorPedidos.listarPedidos());
 
                         break;
                     }
@@ -88,7 +92,4 @@ public class MenuPedidos {
 
         } while (selecionar != 5);
     }
-}
-
-
 }

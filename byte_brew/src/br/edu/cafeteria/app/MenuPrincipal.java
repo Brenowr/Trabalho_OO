@@ -15,10 +15,7 @@ public class MenuPrincipal {
     private CadastroCliente cadastroCliente;
     private CadastroProduto cadastroProduto;
 
-    public MenuPrincipal(
-            GerenciadorPedidos gerenciadorPedidos,
-            CadastroCliente cadastroCliente,
-           CadastroProduto cadastroProduto) {
+    public MenuPrincipal(GerenciadorPedidos gerenciadorPedidos, CadastroCliente cadastroCliente, CadastroProduto cadastroProduto) {
 
         this.gerenciadorPedidos = gerenciadorPedidos;
         this.cadastroCliente = cadastroCliente;
@@ -35,10 +32,11 @@ public class MenuPrincipal {
 
                 entrada = JOptionPane.showInputDialog("Selecione sua opcao:\n" +
                         								"1: Menu Clientes\n" +
-                        								"2: Menu Carrinho\n" +
-                										"3: Sair");
+                        								"2: Menu Produtos\n" +
+                        								"3: Menu Pedidos\n" +
+                										"4: Sair");
                 if (entrada == null) {
-                    selecionar = 3;
+                    selecionar = 4;
                     continue;
                 }
 
@@ -53,21 +51,28 @@ public class MenuPrincipal {
 
                     case 1: {
 
-                        MenuCliente menu = new MenuCliente();
-                        menu.menuCliente();
+                        MenuClientes menu = new MenuClientes(cadastroCliente);
+                        menu.menuClientes();
                         break;
                     }
 
                     case 2: {
 
-                        JOptionPane.showMessageDialog(null,"Menu Carrinho");
+                    	MenuProdutos menu = new MenuProdutos(cadastroProduto);
+                        menu.menuProdutos();
+                        break;
+                    }
+                    case 3: {
+
+                    	MenuPedidos menu = new MenuPedidos(gerenciadorPedidos);
+                        menu.menuPedidos();
                         break;
                     }
 
 
                     default: {
                     	
-                    	if (selecionar != 3) {
+                    	if (selecionar != 4) {
                     		JOptionPane.showMessageDialog(null,"Opcao invalida!");
                         }
                         break;
@@ -79,6 +84,6 @@ public class MenuPrincipal {
                 JOptionPane.showMessageDialog(null,"Digite apenas números!");
             }
 
-        } while (selecionar != 3);
+        } while (selecionar != 4);
     }
 }
