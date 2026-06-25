@@ -94,9 +94,4 @@ public class MenuPedidos {
         } while (selecionar != 5);
     }
 }
-<<<<<<< HEAD
-=======
 
-
-}
->>>>>>> parent of 0f70303 (Menu Pedido)
