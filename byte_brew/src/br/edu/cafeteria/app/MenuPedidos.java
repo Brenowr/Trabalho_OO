@@ -66,7 +66,8 @@ public class MenuPedidos {
                     case 4: {
 
                         // listarPedido();
-                    	// JOptionPane.showMessageDialog(null, gerenciadorPedidos.listarPedidos());
+                    	GerenciadorPedidos gerenciadorPedidos = new GerenciadorPedidos();
+                    	JOptionPane.showMessageDialog(null, gerenciadorPedidos.listarPedidos());
 
                         break;
                     }
@@ -93,3 +94,9 @@ public class MenuPedidos {
         } while (selecionar != 5);
     }
 }
+<<<<<<< HEAD
+=======
+
+
+}
+>>>>>>> parent of 0f70303 (Menu Pedido)
