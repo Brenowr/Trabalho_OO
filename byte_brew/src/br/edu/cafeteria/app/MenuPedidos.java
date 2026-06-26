@@ -66,10 +66,18 @@ public class MenuPedidos {
                     case 4: {
 
                         // listarPedido();
-                    	GerenciadorPedidos gerenciadorPedidos = new GerenciadorPedidos();
-                    	JOptionPane.showMessageDialog(null, gerenciadorPedidos.listarPedidos());
+                    	String lista = gerenciadorPedidos.listarPedidos();
+                    	if(lista == "") {
+                			JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
+                			break;
+                		}
+                    	else
+                    	{
+                    		JOptionPane.showMessageDialog(null, lista);
 
-                        break;
+                            break;
+                    	}
+                    	
                     }
 
                     case 5: {

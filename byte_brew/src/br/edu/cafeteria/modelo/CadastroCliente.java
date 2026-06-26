@@ -36,17 +36,22 @@ public class CadastroCliente {
 			return true;
 		}
 		
-		public void listarClientes() {
-			if(clientes.isEmpty()) {
-				System.out.println("Nenhum cliente cadastrado.");
-				return;
-			}
-			
-			System.out.println(">>> CLIENTES CADASTRADOS <<<");
-			
-			for(Cliente cliente : clientes) {
-				System.out.println("Nome: "+cliente.getNome()+" | CPF: "+cliente.getCpf()+" | XP: "+cliente.getXp());
-			}
+		public String listarClientes() {
+
+		    if (clientes.isEmpty()) {
+		        return "Nenhum cliente cadastrado.";
+		    }
+
+		    String texto = ">>> CLIENTES CADASTRADOS <<<\n\n";
+
+		    for (Cliente cliente : clientes) {
+		        texto += "Nome: " + cliente.getNome()
+		              + " | CPF: " + cliente.getCpf()
+		              + " | XP: " + cliente.getXp()
+		              + "\n";
+		    }
+
+		    return texto;
 		}
 		
 		public boolean removerCliente(String cpf) {

@@ -7,7 +7,7 @@ public class Comida extends Produto {
 	private boolean gluten;
 	private boolean confeitaria;
 	
-	public Comida(String nomeProduto, double precoBase, int quantidadeEstoque, int codigo, int tempoPreparo, boolean vegano, boolean gluten, boolean confeitaria) {
+	public Comida(String nomeProduto, double precoBase, int quantidadeEstoque, int tempoPreparo, boolean vegano, boolean gluten, boolean confeitaria) {
 		super(nomeProduto, precoBase, quantidadeEstoque);
 		this.tempoPreparo = tempoPreparo;
 		this.vegano = vegano;

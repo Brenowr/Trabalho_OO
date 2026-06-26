@@ -6,7 +6,7 @@ public class Bebida extends Produto{
 	private double cafeina;
 	private boolean quente;
 	
-	public Bebida(String nomeProduto, double precoBase, int quantidadeEstoque, int codigo, String tamanho, double cafeina, boolean quente) {
+	public Bebida(String nomeProduto, double precoBase, int quantidadeEstoque, String tamanho, double cafeina, boolean quente) {
 		super(nomeProduto, precoBase, quantidadeEstoque);
 		this.tamanho = tamanho;
 		this.cafeina = cafeina;

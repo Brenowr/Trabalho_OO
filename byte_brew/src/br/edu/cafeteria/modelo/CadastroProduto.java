@@ -52,7 +52,7 @@ public class CadastroProduto {
 		return lista;
 		
 	}
-	public boolean atualizarProduto(Produto produtoNovo) {
+	public boolean editarProduto(Produto produtoNovo) {
 		Produto produto;
 		if(produtoNovo == null) {
 			return false;

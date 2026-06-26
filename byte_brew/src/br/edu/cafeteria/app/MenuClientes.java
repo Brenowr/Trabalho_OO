@@ -67,8 +67,7 @@ public class MenuClientes {
 
                     case 4: {
 
-                        // listarCliente();
-                        JOptionPane.showMessageDialog(null, "Lista");
+                        JOptionPane.showMessageDialog(null,cadastroClientes.listarClientes());
 
                         break;
                     }
