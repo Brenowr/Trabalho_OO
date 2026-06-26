@@ -28,8 +28,7 @@ public class MenuProdutos {
                         							   "3: Remover Produto\n" +
                         							   "4: Listar Produtos cadastrados\n" +
                         							   "5: Editar Produto\n" +
-                        							   "6: Voltar ao menu Principal"
-                );
+                        							   "6: Voltar ao menu Principal");
 
                 if (entrada == null) {
                     selecionar = 6;
