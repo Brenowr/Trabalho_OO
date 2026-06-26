@@ -36,18 +36,35 @@ public class CadastroProduto {
 	}
 	
 	public String listarProdutos() {
-		String lista = ">>> PRODUTOS CADASTRADOS <<<\n";
+		String listaComidas = ">>> COMIDAS CADASTRADAS <<<\n";
+		String listaBebidas = ">>> BEBIDAS CADASTRADAS <<<\n";
+		String listaProduto = "";
+		String lista = "";
 		
 		if(produtos.isEmpty()) {
 			return "Nenhum produto cadastrado.";
 			
 		}
 		
+		
+		
 		for(Produto produto : produtos) {
-			lista += "Nome: " + produto.getNomeProduto() + " | Código: " + produto.getCodigoProduto() + " | Quantidade no estoque: " + produto.getQuantidadeEstoque() 
-				  + " | Preço: R$ " + produto.getPrecoBase() + "\n";
+			listaProduto = "Nome: " + produto.getNomeProduto() + " | Código: " + produto.getCodigoProduto() + " | Quantidade no estoque: " + produto.getQuantidadeEstoque() 
+ 			 + " | Preço: R$ " + produto.getPrecoBase() + "\n";
+			
+			if(produto instanceof Comida) {
+				Comida comida = (Comida) produto;
+				listaComidas += listaProduto + "Tempo de preparo: " + comida.getTempoPreparo() + " | É vegano: " + comida.getVegano() 
+				  			 + " | Contém glúten: " + comida.getGluten() + " | É produzido na confeitaria: " + comida.getConfeitaria() + "\n\n";
+				
+			}else {
+				Bebida bebida = (Bebida) produto;
+				listaBebidas += listaProduto + "Tamanho: " + bebida.getTamanho() + " | Contém cafeína: " + bebida.getCafeina() + " | É quente: " + bebida.getQuente() + "\n\n";
+				
+			}
 			
 		}
+		lista += listaComidas + listaBebidas;
 		return lista;
 		
 	}
