@@ -193,9 +193,17 @@ public class MenuProdutos {
                     }
 
                     case 4: {
-                    	JOptionPane.showMessageDialog(null, cadastroProduto.listarProdutos());
+                    String lista = cadastroProduto.listarProdutos();
+                    if(lista == "") {
+                		JOptionPane.showMessageDialog(null, "Não há produtos cadastrados.");
+                		
+               			break;
+               		}
+                   	else {
+                   		JOptionPane.showMessageDialog(null, lista);
 
-                        break;
+                   		break;
+                   	}
                     }
 
                     case 5: {

@@ -65,7 +65,6 @@ public class MenuPedidos {
 
                     case 4: {
 
-                        // listarPedido();
                     	String lista = gerenciadorPedidos.listarPedidos();
                     	if(lista == "") {
                 			JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
