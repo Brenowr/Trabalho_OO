@@ -39,13 +39,12 @@ public class CadastroProduto {
 		String lista = ">>> PRODUTOS CADASTRADOS <<<\n";
 		
 		if(produtos.isEmpty()) {
-			JOptionPane.showInputDialog(null,"Nenhum produto cadastrado.");
-			return null;
+			return "Nenhum produto cadastrado.";
 			
 		}
 		
 		for(Produto produto : produtos) {
-			lista += "Produto: " + produto.getNomeProduto() + " | Código: " + produto.getCodigoProduto() +" | Quantidade no estoque:" + produto.getQuantidadeEstoque() 
+			lista += "Nome: " + produto.getNomeProduto() + " | Código: " + produto.getCodigoProduto() + " | Quantidade no estoque: " + produto.getQuantidadeEstoque() 
 				  + " | Preço: R$ " + produto.getPrecoBase() + "\n";
 			
 		}
