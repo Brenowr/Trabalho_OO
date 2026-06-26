@@ -2,6 +2,9 @@ package br.edu.cafeteria.modelo;
 
 import java.util.ArrayList;
 import br.edu.cafeteria.excecao.NomeInvalidoException;
+import br.edu.cafeteria.excecao.CpfInvalidoException;
+import br.edu.cafeteria.excecao.CpfDuplicadoException;
+import br.edu.cafeteria.excecao.ClienteNaoEncontradoException;
 
 public class CadastroCliente {
 
@@ -11,26 +14,26 @@ public class CadastroCliente {
 			clientes = new ArrayList<>();
 		}
 		
-		public Cliente buscarCliente(String cpf) {
+		public Cliente buscarCliente(String cpf) throws ClienteNaoEncontradoException{
 			for(Cliente cliente : clientes) {
 				if(cliente.getCpf().equals(cpf)) {
 					return cliente;
 				}
 			}
-			return null;
+			throw new ClienteNaoEncontradoException();
 		}
 		
-		public boolean cadastrarCliente(Cliente cliente) throws NomeInvalidoException{
+		public boolean cadastrarCliente(Cliente cliente) throws NomeInvalidoException, CpfInvalidoException, CpfDuplicadoException, ClienteNaoEncontradoException {
 			if(!nomeValido(cliente.getNome())) {
 				throw new NomeInvalidoException();
 			}
 			
 			if(!cpfValido(cliente.getCpf())) {
-				return false;
+				throw new CpfInvalidoException();
 			}
 			
 			if(buscarCliente(cliente.getCpf()) != null) {
-				return false;
+				throw new CpfDuplicadoException();
 			}
 			clientes.add(cliente);
 			return true;
@@ -54,21 +57,18 @@ public class CadastroCliente {
 		    return texto;
 		}
 		
-		public boolean removerCliente(String cpf) {
+		public boolean removerCliente(String cpf) throws ClienteNaoEncontradoException {
 			Cliente cliente = buscarCliente(cpf);
 			
-			if(cliente == null) {
-				return false;
-			}
 			clientes.remove(cliente);
 			return true;
 		}
 		
-		public boolean atualizarNomeCliente(String cpf, String novoNome) throws NomeInvalidoException{
+		public boolean atualizarNomeCliente(String cpf, String novoNome) throws NomeInvalidoException, ClienteNaoEncontradoException{
 			Cliente cliente = buscarCliente(cpf);
 			
 			if(cliente == null) {
-				return false;
+				throw new ClienteNaoEncontradoException();
 			}
 			if(!nomeValido(novoNome)) {
 				throw new NomeInvalidoException();
@@ -81,11 +81,11 @@ public class CadastroCliente {
 			return clientes.size();
 		}
 		
-		public boolean promoverParaVip(String cpf) {
+		public boolean promoverParaVip(String cpf) throws ClienteNaoEncontradoException{
 			Cliente cliente = buscarCliente(cpf);
 			
-			if(cliente == null) { //cliente nao encontrado
-				return false;
+			if(cliente == null) {
+				throw new ClienteNaoEncontradoException();
 			}
 			if(!(cliente instanceof ClienteStandard)) { //já é vip
 				return false;

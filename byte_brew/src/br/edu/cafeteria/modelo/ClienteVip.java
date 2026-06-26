@@ -1,5 +1,7 @@
 package br.edu.cafeteria.modelo;
 
+import br.edu.cafeteria.excecao.XpInsuficienteException;
+
 public class ClienteVip extends Cliente{
 	
 	public ClienteVip(String nomeCliente, String cpf) {
@@ -13,12 +15,13 @@ public class ClienteVip extends Cliente{
 		adicionarXP(valorInt*2);
 	}
 	
-	public boolean gastarXP(double valorPedido) {
+	public boolean gastarXP(double valorPedido) throws XpInsuficienteException{
 		int xpNecessario = (int) (valorPedido*10);
-		if(getXp() >= xpNecessario) {
-			removerXP(xpNecessario);
-			return true;
+		if(getXp() < xpNecessario) {
+			throw new XpInsuficienteException();
 		}
-		return false;
+		
+		removerXP(xpNecessario);
+		return true;
 	}
 }
