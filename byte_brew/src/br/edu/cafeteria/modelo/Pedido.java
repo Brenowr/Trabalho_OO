@@ -1,6 +1,7 @@
 package br.edu.cafeteria.modelo;
 import java.util.ArrayList;
 import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
+import br.edu.cafeteria.excecao.XpInsuficienteException;
 
 public class Pedido {
 	private ArrayList<ItemPedido> itens;
@@ -21,8 +22,8 @@ public class Pedido {
 	}
 	
 	public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
-		itens.add(new ItemPedido(produto, quantidade));
 		produto.retirarEstoque(quantidade);
+		itens.add(new ItemPedido(produto, quantidade));
 	}
 	
 	public int getCodigoPedido() {
@@ -31,6 +32,27 @@ public class Pedido {
 	
 	public Cliente getCliente() {
 		return cliente;
+	}
+	
+	public double calcularTotal() {
+		double total=0;
+		for (ItemPedido item : itens) {
+		    total += item.calcularSubtotal();
+		}
+		return total;
+	}
+	public void finalizarCompra(boolean usarXp) throws XpInsuficienteException{
+		
+		double total = calcularTotal();
+		if(cliente!=null){
+			if(usarXp && cliente instanceof ClienteVip) {
+				((ClienteVip) cliente).gastarXP(total);
+			}
+		}
+		else {
+			cliente.calcularXP(total);
+		}
+		
 	}
 
 }

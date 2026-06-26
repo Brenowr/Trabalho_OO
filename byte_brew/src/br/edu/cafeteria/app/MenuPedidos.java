@@ -23,12 +23,14 @@ public class MenuPedidos {
                         							   "1: Criar Pedido\n" +
                         							   "2: Remover Pedido\n" +
                         							   "3: Editar Pedido\n" +
-                        							   "4: Listar Pedido\n" +
-                        							   "5: Voltar ao menu Principal"
+                        							   "4: Visualizar itens do Pedido\n" +
+                        							   "5: Listar Pedidos\n" +
+                        							   "6: Finalizar Pedido\n" +
+                        							   "7: Voltar ao menu Principal"
                 );
 
                 if (entrada == null) {
-                    selecionar = 5;
+                    selecionar = 7;
                 } else if (entrada.isEmpty()) {
                     JOptionPane.showMessageDialog(null,"Digite uma opção!");
                     continue;
@@ -38,8 +40,13 @@ public class MenuPedidos {
 
 
                 switch (selecionar) {
+                
+                	case 1: {
 
-                    case 1: {
+                    break;
+                	}
+
+                    case 2: {
 
                         // criarPedido();
                         JOptionPane.showMessageDialog(null, "Cadastro");
@@ -47,7 +54,7 @@ public class MenuPedidos {
                         break;
                     }
 
-                    case 2: {
+                    case 3: {
 
                         // removerPedido();
                         JOptionPane.showMessageDialog(null, "Remove");
@@ -55,7 +62,7 @@ public class MenuPedidos {
                         break;
                     }
 
-                    case 3: {
+                    case 4: {
 
                         // editarPedido();
                         JOptionPane.showMessageDialog(null, "Edita");
@@ -63,7 +70,7 @@ public class MenuPedidos {
                         break;
                     }
 
-                    case 4: {
+                    case 5: {
 
                     	String lista = gerenciadorPedidos.listarPedidos();
                     	if(lista == "") {
@@ -79,10 +86,16 @@ public class MenuPedidos {
                     	
                     }
 
-                    case 5: {
+                    case 6: {
 
                         break;
                     }
+                    
+                    case 7: {
+
+                        break;
+                    }
+
 
                     default: {
 
@@ -98,7 +111,7 @@ public class MenuPedidos {
                 JOptionPane.showMessageDialog(null,"Digite apenas números!");
             }
 
-        } while (selecionar != 5);
+        } while (selecionar != 7);
     }
 }
 

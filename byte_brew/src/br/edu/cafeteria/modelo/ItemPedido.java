@@ -8,5 +8,14 @@ public class ItemPedido {
 		this.produto = produto;
 		this.quantidade = quantidade;
 	}
+	public int getQuantidade() {
+		return quantidade;
+	}
+	public Produto getProduto() {
+		return produto;
+	}
+	public double calcularSubtotal()
+	{
+		return produto.getPrecoBase()*quantidade;
+	}
 }
-// erros de estoque e excecoes no geral nao esquecer
