@@ -278,6 +278,7 @@ public class MenuProdutos {
        }
        
        private void editarProdutos() {
+    	   Produto produto;
     	   int selecionarProduto = 0;
     	   int codigoProduto;
     	   listarProdutos();
