@@ -51,13 +51,10 @@ public class CadastroProduto {
  			 + " | Preço: R$ " + produto.getPrecoBase() + "\n";
 			
 			if(produto instanceof Comida) {
-				Comida comida = (Comida) produto;
-				listaComidas += listaProduto + "Tempo de preparo: " + comida.getTempoPreparo() + " | É vegano: " + comida.getVegano() 
-				  			 + " | Contém glúten: " + comida.getGluten() + " | É produzido na confeitaria: " + comida.getConfeitaria() + "\n\n";
+				listaComidas += listaProduto + "\n";
 				
 			}else {
-				Bebida bebida = (Bebida) produto;
-				listaBebidas += listaProduto + "Tamanho: " + bebida.getTamanho() + " | Contém cafeína: " + bebida.getCafeina() + " | É quente: " + bebida.getQuente() + "\n\n";
+				listaBebidas += listaProduto + "\n";
 				
 			}
 			

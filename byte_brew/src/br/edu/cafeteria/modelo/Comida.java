@@ -31,14 +31,30 @@ public class Comida extends Produto {
 	public double getTempoPreparo() {
 		return tempoPreparo;
 	}
-	public boolean getVegano() {
-		return vegano;
+	public String getVegano() {
+		if(this.vegano) {
+			return "sim";
+			
+		}
+		
+		return "Não";
 	}
-	public boolean getGluten() {
-		return gluten;
+	public String getGluten() {
+		if(this.gluten) {
+			return "sim";
+			
+		}
+		
+		return "Não";
 	}
-	public boolean getConfeitaria() {
-		return confeitaria;
+	
+	public String getConfeitaria() {
+		if(this.confeitaria) {
+			return "sim";
+			
+		}
+		
+		return "Não";
 	}
 	
 	

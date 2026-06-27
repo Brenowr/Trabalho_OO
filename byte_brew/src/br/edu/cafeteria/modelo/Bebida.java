@@ -29,7 +29,12 @@ public class Bebida extends Produto{
 	public double getCafeina() {
 		return cafeina;
 	}
-	public boolean getQuente() {
-		return quente;
+	public String getQuente() {
+		if(this.quente) {
+			return "sim";
+			
+		}
+		
+		return "Não";
 	}
 }
