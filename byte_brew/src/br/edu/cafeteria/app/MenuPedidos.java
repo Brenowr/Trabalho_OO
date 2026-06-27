@@ -239,8 +239,8 @@ public class MenuPedidos {
         try {
         	quantidade = Integer.parseInt(quantidadeAdicionada);
         } catch (NumberFormatException e) {
-
             JOptionPane.showMessageDialog(null,"Digite apenas números!");
+            return;
         }
         
         try {
