@@ -72,16 +72,16 @@ public class Pedido {
 		}
 		return total;
 	}
-	public void finalizarCompra(boolean usarXp) throws XpInsuficienteException{
+	public void finalizarCompra(boolean usarXp,double total) throws XpInsuficienteException{
 		
-		double total = calcularTotal();
 		if(cliente!=null){
 			if(usarXp && cliente instanceof ClienteVip) {
 				((ClienteVip) cliente).gastarXP(total);
 			}
-		}
-		else {
-			cliente.calcularXP(total);
+			else if(cliente!=null){
+				cliente.calcularXP(total);
+			}
+			
 		}
 	}
 		public void removerItem(Produto produto, int quantidade) {

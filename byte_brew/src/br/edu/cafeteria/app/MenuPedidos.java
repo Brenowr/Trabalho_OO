@@ -5,12 +5,17 @@ import javax.swing.JOptionPane;
 import br.edu.cafeteria.excecao.ClienteNaoEncontradoException;
 import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
 import br.edu.cafeteria.excecao.NenhumProdutoException;
+import br.edu.cafeteria.excecao.XpInsuficienteException;
 import br.edu.cafeteria.modelo.CadastroCliente;
 import br.edu.cafeteria.modelo.CadastroProduto;
 import br.edu.cafeteria.modelo.Cliente;
+import br.edu.cafeteria.modelo.ClienteVip;
 import br.edu.cafeteria.modelo.GerenciadorPedidos;
 import br.edu.cafeteria.modelo.Pedido;
 import br.edu.cafeteria.modelo.Produto;
+import br.edu.cafeteria.servico.PromocaoEventoGeek;
+import br.edu.cafeteria.servico.PromocaoFestivalGastronomico;
+import br.edu.cafeteria.servico.Promocional;
 
 public class MenuPedidos {
 
@@ -83,6 +88,7 @@ public class MenuPedidos {
                     	
 
                     case 6: {
+                    	finalizarPedido();
                         break;
                     }
                     
@@ -347,18 +353,130 @@ public class MenuPedidos {
             return;
         }
         String nome;
-        if(pedido.getCliente()==null)
+        if(pedido.getCliente() == null)
         {
         	nome = "Cliente casual";
         }
         else {
         	 nome = pedido.getCliente().getNome();
         }
-        JOptionPane.showMessageDialog(null, "Pedido de: "+ nome+ " | Codigo: "+ pedido.getCodigoPedido()+"\n" +pedido.listarProdutos());
+        JOptionPane.showMessageDialog(null, "Pedido de: "+ nome + " | Codigo: "+ pedido.getCodigoPedido()+"\n" + pedido.listarProdutos());
     }
 	
 	private void finalizarPedido() {
 		
+		String listaPedidos = gerenciadorPedidos.listarPedidos();
+        if (listaPedidos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
+            return;
+        }
+		String codigo = JOptionPane.showInputDialog(null,listaPedidos + "Digite o codigo do pedido que deseja finalizar");
+        if (codigo == null) {
+            return;
+        }
+        int visualizar = Integer.parseInt(codigo);
+
+        Pedido pedido = gerenciadorPedidos.buscarPedido(visualizar);
+
+        if (pedido == null) {
+            JOptionPane.showMessageDialog(null, "Pedido não encontrado!");
+            return;
+        }
+        String nome;
+        if(pedido.getCliente() == null)
+        {
+        	nome = "Cliente casual";
+        }
+        else {
+        	 nome = pedido.getCliente().getNome();
+        }
+        int exp;
+        int promocao = (JOptionPane.showConfirmDialog(null, "Deseja adicionar a promocao?"));
+        if(promocao==JOptionPane.YES_OPTION)	
+        {
+        	int escolha=0;
+        	Promocional promocaoEventoGeek = new PromocaoEventoGeek();
+        	Promocional promocaoFestivalGastronomico = new PromocaoFestivalGastronomico();
+	        	String escolhaPromocao = JOptionPane.showInputDialog(null, "Qual promocao deseja adicionar?\n" +
+	        									   "1: Evento Geek. (10% off bebidas)\n" +
+	        									   "2: Festival Gastronomico. (20% off Comidas)\n"+
+	        									   "3: Voltar");
+	        	if(escolhaPromocao.isEmpty())
+	        	{
+	        		escolha=3;
+	        		return;
+	        	}
+	        	try {
+	        		escolha = Integer.parseInt(escolhaPromocao);
+	        	}
+	        	catch(NumberFormatException e){
+	        		JOptionPane.showMessageDialog(null, "Digite apenas numeros!");
+	        	}
+	        	double total;
+        		switch(escolha){
+        		case 1:{
+        			total = promocaoEventoGeek.aplicarDesconto(pedido);
+        			break;
+        		}
+        		case 2:{
+        			total = promocaoFestivalGastronomico.aplicarDesconto(pedido);
+        			break;
+        			}	
+        		case 3:{
+        			return;
+        		}
+        		default:{
+        			JOptionPane.showInputDialog(null, "Digite uma promocao valida!"); 
+        			return;
+        		}
+        		}
+        		String pedidoFinalizar = "Pedido de: " + nome + " | Codigo: " + 
+        								pedido.getCodigoPedido()+ pedido.listarProdutos()+
+        								"Valor total do pedido: R$ " + String.format("%.2f", total);
+    			if(pedido.getCliente() instanceof ClienteVip) {
+    				exp = JOptionPane.showConfirmDialog(null, "Deseja usar Xp ?");
+        			try
+        			{
+        				if(exp==JOptionPane.YES_OPTION){
+        					pedido.finalizarCompra(true,total);
+        					String codigoProduto = String.valueOf(pedido.getCodigoPedido());
+        					gerenciadorPedidos.removerPedido(codigoProduto); 
+        					JOptionPane.showMessageDialog(null, pedidoFinalizar +"\nPedido Finalizado !");
+        				}
+        				else if (exp==JOptionPane.NO_OPTION) {
+        					pedido.finalizarCompra(false, total);
+        					String codigoProduto = String.valueOf(pedido.getCodigoPedido());
+        					gerenciadorPedidos.removerPedido(codigoProduto);
+        					JOptionPane.showMessageDialog(null, pedidoFinalizar + "\nPedido Finalizado !");
+        				}
+        				else {
+        					return;
+        				}
+        			}
+        			catch (XpInsuficienteException e){
+        				JOptionPane.showMessageDialog(null, e.getMessage());
+        			}
+    			}
+    			else {
+        			try{
+        					pedido.finalizarCompra(true,total);
+        					String codigoProduto = String.valueOf(pedido.getCodigoPedido());
+        					gerenciadorPedidos.removerPedido(codigoProduto);
+        					JOptionPane.showMessageDialog(null, pedidoFinalizar + "\nPedido Finalizado !");
+        			}
+        			catch (XpInsuficienteException e){
+        				JOptionPane.showMessageDialog(null, e.getMessage());
+        				return;
+        			}	
+    			}
+        	
+        	
+        }
+        else if(promocao==JOptionPane.NO_OPTION)
+        {
+        	
+        }
+        else return;
 	}
 }
 
