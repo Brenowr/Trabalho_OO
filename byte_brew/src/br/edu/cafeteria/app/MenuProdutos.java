@@ -1,6 +1,7 @@
 package br.edu.cafeteria.app;
 import javax.swing.JOptionPane;
 
+import br.edu.cafeteria.excecao.NenhumProdutoException;
 import br.edu.cafeteria.modelo.Bebida;
 import br.edu.cafeteria.modelo.CadastroProduto;
 import br.edu.cafeteria.modelo.Comida;
@@ -193,12 +194,15 @@ public class MenuProdutos {
     	   String texto = "";
        	Produto produto = null;
        	int codigoProduto = 0;
-       	String listaProduto = cadastroProduto.listarProdutos();
+       	String listaProduto = "";
        	
-       	if (listaProduto.isEmpty()) {
-               JOptionPane.showMessageDialog(null, "Não há produtos cadastrados.");
-               return;
-           }
+       	try {
+ 		   listaProduto = cadastroProduto.listarProdutos();
+ 	   } catch(NenhumProdutoException e){
+ 		   JOptionPane.showMessageDialog(null, e.getMessage());
+ 		   return;
+ 		   
+ 	   }
        	
        	String entradaProduto = JOptionPane.showInputDialog(listaProduto + "\nInforme o código do produto:");
        	
@@ -237,14 +241,19 @@ public class MenuProdutos {
     	   
        }
        
-       private void removerProduto() {
-    	   String vef = cadastroProduto.listarProdutos();
+       private void removerProduto () {
+    	   String vef = "";
     	   int codigoProduto = 0;
     	   
-    	   if(vef == "") {
-          		JOptionPane.showMessageDialog(null, "Não há produtos cadastrados");
-          		return;
-          	}
+    	   try {
+    		  vef = cadastroProduto.listarProdutos();
+    		   
+    	   }catch(NenhumProdutoException e){
+    		   JOptionPane.showMessageDialog(null, e.getMessage());
+    		   return;
+    		   
+    	   }
+    	   JOptionPane.showMessageDialog(null, vef);
           	
     	   
        	String entradaProduto = JOptionPane.showInputDialog(null,"Informe o código do produto que deve ser removido:");
@@ -267,11 +276,14 @@ public class MenuProdutos {
        }
        
        private void listarProdutos() {
-    	   String lista = cadastroProduto.listarProdutos();
-    	   
-    	   if(lista.isEmpty()) {
-    		   JOptionPane.showMessageDialog(null, "Não há produtos cadastrados");
+    	   String lista = "";
+    	   try {
+    		   lista = cadastroProduto.listarProdutos();
+    		   
+    	   }catch(NenhumProdutoException e){
+    		   JOptionPane.showMessageDialog(null, e.getMessage());
     		   return;
+    		   
     	   }
     	   
     	   JOptionPane.showMessageDialog(null, lista);

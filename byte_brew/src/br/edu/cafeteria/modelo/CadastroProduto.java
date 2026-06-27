@@ -2,6 +2,8 @@ package br.edu.cafeteria.modelo;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import br.edu.cafeteria.excecao.NenhumProdutoException;
+
 public class CadastroProduto {
 	private ArrayList<Produto> produtos;
 	
@@ -35,14 +37,15 @@ public class CadastroProduto {
 		 
 	}
 	
-	public String listarProdutos() {
+	public String listarProdutos() throws NenhumProdutoException {
 		String listaComidas = ">>> COMIDAS CADASTRADAS <<<\n";
 		String listaBebidas = ">>> BEBIDAS CADASTRADAS <<<\n";
 		String listaProduto = "";
 		String lista = "";
 		
 		if(produtos.isEmpty()) {
-			return lista;
+			NenhumProdutoException nenhumProduto = new NenhumProdutoException();
+			throw nenhumProduto;
 			
 		}
 			

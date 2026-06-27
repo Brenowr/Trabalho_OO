@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import br.edu.cafeteria.excecao.ClienteNaoEncontradoException;
 import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
+import br.edu.cafeteria.excecao.NenhumProdutoException;
 import br.edu.cafeteria.modelo.CadastroCliente;
 import br.edu.cafeteria.modelo.CadastroProduto;
 import br.edu.cafeteria.modelo.Cliente;
@@ -201,13 +202,18 @@ public class MenuPedidos {
         } while (selecionarSub != 3);
     }
     private void adicionarItem(Pedido pedido) {
+    	
 
-        String listaProduto = cadastroProduto.listarProdutos();
+        String listaProduto = "";
+        
+        try {
+ 		   listaProduto = cadastroProduto.listarProdutos();
+ 	   }catch(NenhumProdutoException e){
+ 		   JOptionPane.showMessageDialog(null, e.getMessage());
+ 		   return;
+ 		   
+ 	   }
 
-        if (listaProduto.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Não há produtos cadastrados.");
-            return;
-        }
 
         String produtoAdicionado = JOptionPane.showInputDialog(null, listaProduto + "\nDigite o codigo do produto a ser adicionado:");
 
