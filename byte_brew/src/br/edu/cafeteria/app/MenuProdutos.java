@@ -140,7 +140,7 @@ public class MenuProdutos {
                         	break;
                         	
                         } else if(entradaProduto.isEmpty()) {
-                        	JOptionPane.showMessageDialog(null, "Digite uma opção!");
+                        	JOptionPane.showMessageDialog(null, "Digite um código!");
                         	continue;
                         }else {
                         	codigoProduto = Integer.parseInt(entradaProduto);
@@ -180,7 +180,7 @@ public class MenuProdutos {
                         	break;
                         	
                         } else if(entradaProduto.isEmpty()) {
-                        	JOptionPane.showMessageDialog(null, "Digite uma opção!");
+                        	JOptionPane.showMessageDialog(null, "Digite um código!");
                         	continue;
                         }else {
                         	codigoProduto = Integer.parseInt(entradaProduto);
@@ -193,17 +193,9 @@ public class MenuProdutos {
                     }
 
                     case 4: {
-                    String lista = cadastroProduto.listarProdutos();
-                    if(lista == "") {
-                		JOptionPane.showMessageDialog(null, "Não há produtos cadastrados.");
-                		
-               			break;
-               		}
-                   	else {
-                   		JOptionPane.showMessageDialog(null, lista);
+                    	
+                    	JOptionPane.showMessageDialog(null, cadastroProduto.listarProdutos());
 
-                   		break;
-                   	}
                     }
 
                     case 5: {

@@ -45,9 +45,7 @@ public class CadastroProduto {
 			return "Nenhum produto cadastrado.";
 			
 		}
-		
-		
-		
+			
 		for(Produto produto : produtos) {
 			listaProduto = "Nome: " + produto.getNomeProduto() + " | Código: " + produto.getCodigoProduto() + " | Quantidade no estoque: " + produto.getQuantidadeEstoque() 
  			 + " | Preço: R$ " + produto.getPrecoBase() + "\n";
