@@ -356,5 +356,9 @@ public class MenuPedidos {
         }
         JOptionPane.showMessageDialog(null, "Pedido de: "+ nome+ " | Codigo: "+ pedido.getCodigoPedido()+"\n" +pedido.listarProdutos());
     }
+	
+	private void finalizarPedido() {
+		
+	}
 }
 

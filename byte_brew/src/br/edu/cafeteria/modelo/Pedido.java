@@ -16,6 +16,11 @@ public class Pedido {
 		
 	}
 	
+	public ArrayList<ItemPedido> getItens(){
+		return itens;
+		
+	}
+	
 	public void adicionarItem(Produto produto) throws EstoqueInsuficienteException {
 	adicionarItem(produto,1); 
 		
