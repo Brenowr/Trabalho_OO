@@ -47,7 +47,6 @@ public class Comida extends Produto {
 		
 		return "Não";
 	}
-	
 	public String getConfeitaria() {
 		if(this.confeitaria) {
 			return "sim";
@@ -55,6 +54,13 @@ public class Comida extends Produto {
 		}
 		
 		return "Não";
+	}
+	public String getCozinha() {
+		if(this.confeitaria) {
+			return "Não";
+		}
+		
+		return "sim";
 	}
 	
 	

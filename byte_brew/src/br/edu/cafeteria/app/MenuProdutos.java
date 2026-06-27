@@ -1,6 +1,7 @@
 package br.edu.cafeteria.app;
 import javax.swing.JOptionPane;
 
+import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
 import br.edu.cafeteria.excecao.NenhumProdutoException;
 import br.edu.cafeteria.modelo.Bebida;
 import br.edu.cafeteria.modelo.CadastroProduto;
@@ -71,7 +72,7 @@ public class MenuProdutos {
                     }
 
                     case 5: {
-
+                    	editarProdutos();
                         break;
                     }
                     
@@ -227,7 +228,7 @@ public class MenuProdutos {
        	if(produto instanceof Comida) {
        		Comida comida = (Comida) produto;
        		texto += "Tempo de preparo em minutos: " + comida.getTempoPreparo() + " | É vegano: " + comida.getVegano() + " | Contém glútem: " + comida.getGluten()
-       			  + " | É produzido na confeitaria: " + comida.getConfeitaria() + "\n";
+       			  + " | É produzido na confeitaria: " + comida.getConfeitaria() + " | É produzido na cozinha: " + comida.getCozinha() + "\n";
        		
        	
        	}else {
@@ -253,10 +254,8 @@ public class MenuProdutos {
     		   return;
     		   
     	   }
-    	   JOptionPane.showMessageDialog(null, vef);
-          	
     	   
-       	String entradaProduto = JOptionPane.showInputDialog(null,"Informe o código do produto que deve ser removido:");
+       	String entradaProduto = JOptionPane.showInputDialog(null,vef + "\nInforme o código do produto que deve ser removido:");
        	
        	if (entradaProduto == null) {
            	return;
@@ -290,19 +289,417 @@ public class MenuProdutos {
        }
        
        private void editarProdutos() {
+    	   String entrada;
     	   Produto produto;
     	   int selecionarProduto = 0;
     	   int codigoProduto;
-    	   listarProdutos();
-    	   codigoProduto = Integer.parseInt(JOptionPane.showInputDialog("Informe o código do produto:"));
+    	   String selecionar;
     	   
-    	   cadastroProduto.buscarProduto(selecionarProduto);
+    	   String lista = "";
+    	   try {
+    		   lista = cadastroProduto.listarProdutos();
+    		   
+    	   }catch(NenhumProdutoException e){
+    		   JOptionPane.showMessageDialog(null, e.getMessage());
+    		   return;
+    		   
+    	   }
     	   
-    	   selecionarProduto = Integer.parseInt(JOptionPane.showInputDialog("Selecione sua opção:\n" ));
+    	   codigoProduto = Integer.parseInt(JOptionPane.showInputDialog(lista +"\nInforme o código do produto:"));
+    	   
+    	   produto = cadastroProduto.buscarProduto(codigoProduto);
+    	   
+    	   if(produto instanceof Comida) {
+    		   Comida comida = (Comida) produto;
+    		   
+    		   
+    		  selecionar = JOptionPane.showInputDialog("Selecione sua opcao:\n" +
+													   "1: Adicionar estoque\n" +
+													   "2: Remover estoque\n" +
+													   "3: Alterar nome\n" +
+													   "4: Alterar preço\n" +
+													   "5: Alterar tempo de Preparo\n" +
+													   "6: Alterar classificação vegana\n" +
+													   "7: Alterar informação de glúten\n" +
+													   "8: Alterar local de preparo\n" +
+													   "9: Sair para menu produtos");
+    		  
+    		  if(selecionar == null) {
+    			  selecionarProduto = 9;
+    			  
+    		  } else if(selecionar == "") {
+    			  JOptionPane.showMessageDialog(null,"Digite uma opção!");
+    			  return;
+    			  
+    		  }else {
+    			  selecionarProduto = Integer.parseInt(selecionar);
+    			  
+    		  }
+    		  
+    		   
+    		   
+    		   switch(selecionarProduto) {
+    		   
+    		   
+    		   		case 1: {
+    		   			entrada = JOptionPane.showInputDialog("Estoque: " + comida.getQuantidadeEstoque() + "\nInforme a quantidade que deve ser adicionada no estoque:");
+    		   			
+    		   			if(entrada == null) {
+    		   				break;
+    		   				
+    		   			} else if(entrada == "") {
+    		   				JOptionPane.showMessageDialog(null, "Informe uma quantidade!");
+    		   				break;
+    		   			}
+    		   			
+    		   			int quantidade = Integer.parseInt(entrada);
+    		   			comida.adicionarEstoque(quantidade);
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   		}
+    		   		
+    		   		case 2: {
+    		   			entrada = JOptionPane.showInputDialog("Estoque: " + comida.getQuantidadeEstoque() + "\nInforme a quantidade que deve ser retirada do estoque:");
+    		   			
+    		   			if(entrada == null) {
+    		   				break;
+    		   				
+    		   			} else if(entrada == "") {
+    		   				JOptionPane.showMessageDialog(null, "Informe uma quantidade!");
+    		   				break;
+    		   			}
+    		   			
+    		   			int quantidade = Integer.parseInt(entrada);
+    		   			try {
+    		   				comida.retirarEstoque(quantidade);
+    		   				
+    		   			} catch(EstoqueInsuficienteException e){
+    		   				JOptionPane.showMessageDialog(null, "Não é possível retirar essa quantidade do estoque");
+    		   				break;
+    		 
+    		   			}
+    		   			
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   			
+    		   				
+    		   		}
+    		   		
+    		   		case 3: {
+    		   			entrada = JOptionPane.showInputDialog("Nome: " + comida.getNomeProduto() + "\nInforme o novo nome:");
+    		   			
+    		   			if(entrada == "") {
+    		   				JOptionPane.showMessageDialog(null,"Informe um nome!");
+    		   				break;
+    		
+    		   			}else if(entrada == null) {
+    		   				break;
+    		   			}
+    		   			
+    		   			comida.setNomeProduto(entrada);
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   		}
+    		   		
+    		   		case 4: {
+    		   			entrada = JOptionPane.showInputDialog("Preço: " + comida.getPrecoBase() + "\nInforme o novo preço:");
+    		   			
+    		   			if(entrada == null) {
+			   				break;
+			   				
+			   			} else if(entrada == "") {
+			   				JOptionPane.showMessageDialog(null, "Informe um preço!");
+			   				break;
+			   				
+			   			}
+    		   			
+    		   			int preco = Integer.parseInt(entrada);
+    		   			comida.setPrecoBase(preco);
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   			
+    		   		}
+    		   		
+    		   		case 5: {
+    		   			int tempo;
+    		   			entrada = JOptionPane.showInputDialog("Tempo de preparo: " + comida.getTempoPreparo()  + " minutos\nInforme o novo tempo de preparo em minutos:");
+    		   			
+    		   			if(entrada == null) {
+    		   				break;
+    		   				
+    		   			}else if(entrada == "") {
+    		   				JOptionPane.showMessageDialog(null, "Informe um tempo de preparo!");
+    		   				break;
+    		   				
+    		   			}
+    		   			tempo = Integer.parseInt(entrada);
+    		   			comida.setTempoPreparo(tempo);
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   			
+    		   			
+    		   			
+    		   			
+    		   		}
+    		   		
+    		   		case 6: {
+    		   			
+    		   			boolean vegano = JOptionPane.showConfirmDialog(null,"O produto será modificado para vegano?") == JOptionPane.YES_OPTION;
+    		   			
+    		   			comida.setVegano(vegano);
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   			
+    		   			
+    		   		}
+    		   		
+    		   		case 7: {
+    		   			boolean gluten = JOptionPane.showConfirmDialog(null,"O produto será modificado para conter glúten?") == JOptionPane.YES_OPTION;
+    		   			
+    		   			comida.setGluten(gluten);
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   		}
+    		   		
+    		   		case 8: {
+    		   			boolean confeitaria =  JOptionPane.showConfirmDialog(null,"O produto será modificado para ser de confeitaria?") == JOptionPane.YES_OPTION;
+    		   			
+    		   			comida.setConfeitaria(confeitaria);
+    		   			
+    		   			if(cadastroProduto.editarProduto(comida)) {
+    		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+    		   			}
+    		   			break;
+    		   		}
+    		   		
+    		   		case 9: {
+    		   			break;
+    		   		}
+    		   		
+    		   		default: {
+    		   			JOptionPane.showMessageDialog(null,"Opção inváida!");
+    		   			break;
+    		   			
+    		   		}
+    		   }
+    			   
+    		   } else {
+    			   Bebida bebida = (Bebida) produto;
+    			   
+    			   selecionar = JOptionPane.showInputDialog("Selecione sua opcao:\n" +
+								    					   "1: Adicionar estoque\n" +
+								    					   "2: Remover estoque\n" +
+								    					   "3: Alterar nome\n" +
+								    					   "4: Alterar preço\n" +
+								    					   "5: Alterar tamanho\n" +
+								    					   "6: Alterar informção de cafeína\n" +
+								    					   "7: Alterar informação de temperatura\n" +
+								    					   "8: Sair para menu produtos");
+    			   
+    			   if(selecionar == null) {
+    	    			  selecionarProduto = 9;
+    	    			  
+    	    		  } else if(selecionar == "") {
+    	    			  JOptionPane.showMessageDialog(null,"Digite uma opção!");
+    	    			  return;
+    	    			  
+    	    		  }else {
+    	    			  selecionarProduto = Integer.parseInt(selecionar);
+    	    			  
+    	    		  }
+    			   
+    			   switch(selecionarProduto) {
+    			   		
+    			   
+    			   		case 1: {
+        		   			entrada = JOptionPane.showInputDialog("Estoque: " + bebida.getQuantidadeEstoque() + "\nInforme a quantidade que deve ser adicionada no estoque:");
+        		   			
+        		   			if(entrada == null) {
+        		   				break;
+        		   				
+        		   			} else if(entrada == "") {
+        		   				JOptionPane.showMessageDialog(null, "Informe uma quantidade!");
+        		   				break;
+        		   			}
+        		   			
+        		   			int quantidade = Integer.parseInt(entrada);
+        		   			bebida.adicionarEstoque(quantidade);
+        		   			
+        		   			if(cadastroProduto.editarProduto(bebida)) {
+        		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+        		   			}
+        		   			break;
+    			   			
+    			   		}
+    			   		
+    			   		case 2: {
+        		   			entrada = JOptionPane.showInputDialog("Estoque: " + bebida.getQuantidadeEstoque() + "\nInforme a quantidade que deve ser retirada do estoque:");
+        		   			
+        		   			if(entrada == null) {
+        		   				break;
+        		   				
+        		   			} else if(entrada == "") {
+        		   				JOptionPane.showMessageDialog(null, "Informe uma quantidade!");
+        		   				break;
+        		   			}
+        		   			
+        		   			int quantidade = Integer.parseInt(entrada);
+        		   			try {
+        		   				bebida.retirarEstoque(quantidade);
+        		   				
+        		   			} catch(EstoqueInsuficienteException e){
+        		   				JOptionPane.showMessageDialog(null, "Não é possível retirar essa quantidade do estoque");
+        		   				break;
+        		 
+        		   			}
+        		   			
+        		   			
+        		   			if(cadastroProduto.editarProduto(bebida)) {
+        		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+        		   			}
+        		   			break;
+    			   			
+    			   		}
+    			   		
+    			   		case 3: {
+    			   			entrada= JOptionPane.showInputDialog("Nome: " + bebida.getNomeProduto() + "\nInforme o novo nome:");
+        		   			
+        		   			if(entrada == "") {
+        		   				JOptionPane.showMessageDialog(null,"Informe um nome!");
+        		   				break;
+        		
+        		   			}else if(entrada == null) {
+        		   				break;
+        		   			}
+        		   			
+        		   			bebida.setNomeProduto(entrada);
+        		   			
+        		   			if(cadastroProduto.editarProduto(bebida)) {
+        		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+        		   			}
+        		   			break;
+    			   			
+    			   		}
+    			   		
+    			   		case 4: {
+    			   			entrada = JOptionPane.showInputDialog("Preço: R$" + bebida.getPrecoBase() + "\nInforme o novo preço:");
+    			   			
+    			   			if(entrada == null) {
+    			   				break;
+    			   				
+    			   			} else if(entrada == "") {
+    			   				JOptionPane.showMessageDialog(null, "Informe um preço!");
+    			   				break;
+    			   				
+    			   			}
+        		   			
+        		   			int preco = Integer.parseInt(entrada);
+        		   			bebida.setPrecoBase(preco);
+        		   			
+        		   			if(cadastroProduto.editarProduto(bebida)) {
+        		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+        		   			}
+        		   			break;
+    			   			
+    			   		}
+    			   		
+    			   		case 5: {
+    			   			entrada = JOptionPane.showInputDialog("Tamanho: " + bebida.getTamanho() + "\nInforme o novo tamanho (P, M ou G):");
+    			   			
+    			   			if(entrada == null) {
+    			   				break;
+    			   				
+    			   			} else if(entrada == "") {
+    			   				JOptionPane.showMessageDialog(null, "Informe um tamanho!");
+    			   				break;
+    			   				
+    			   			} else if(entrada != "P" || entrada != "M" || entrada != "G") {
+    			   				JOptionPane.showMessageDialog(null, "Digite um tamanho válido");
+    			   				break;
+    			   				
+    			   			}
+    			   			
+    			   			bebida.setTamanho(entrada);
+    			   			
+    			   			if(cadastroProduto.editarProduto(bebida)) {
+        		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+        		   			}
+    			   			
+    			   		}
+    			   		
+    			   		case 6: {
+    			   			entrada =  JOptionPane.showInputDialog("Dosagem de cafeína: " + bebida.getCafeina() + "\nInforme a nova dosagem de cafeína em mg:");
+    			   			
+    			   			if(entrada == null) {
+    			   				break;
+    			   				
+    			   			} else if(entrada == "") {
+    			   				JOptionPane.showMessageDialog(null, "Informe uma dosagem!");
+    			   				break;
+    			   				
+    			   			}
+    			   			
+    			   			int cafeina = Integer.parseInt(entrada);
+    			   			
+    			   			bebida.setCafeina(cafeina);
+    			   			
+    			   			if(cadastroProduto.editarProduto(bebida)) {
+        		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+        		   			}
+    			   			
+    			   		}
+    			   		
+    			   		case 7: {
+    			   			boolean quente =  JOptionPane.showConfirmDialog(null,"O produto será modificado para ser de confeitaria?") == JOptionPane.YES_OPTION;
+    			   			
+    			   			bebida.setQuente(quente);
+    			   			
+    			   			if(cadastroProduto.editarProduto(bebida)) {
+        		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
+        		   			}
+    			   			
+    			   		}
+    			   		
+    			   		case 8: {
+    			   			break;
+    			   		}
+    			   		
+    			   		default: {
+    			   			JOptionPane.showMessageDialog(null, "Opção inválida");
+    			   		}
+    			   }
+    			   
+    		   }
+    		   
+    		   
+    		   
+    	   
+    	   } 
+    	   
     			   																					
     	   
     	   
-       }
        
        
        
