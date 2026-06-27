@@ -126,10 +126,12 @@ public class CadastroCliente {
 		}
 		
 		private boolean nomeValido(String nome) {
-			if(nome == null || nome.isBlank()) {
-				return false;
-			}
-			return true;
+
+		    if (nome == null || nome.isBlank()) {
+		        return false;
+		    }
+
+		    return nome.matches("[a-zA-ZÀ-ÿ ]+");
 		}
 		
 		private boolean cpfJaExiste(String cpf) {

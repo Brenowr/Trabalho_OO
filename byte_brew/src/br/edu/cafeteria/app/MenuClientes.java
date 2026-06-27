@@ -232,8 +232,8 @@ public class MenuClientes {
                     String entradaSub = JOptionPane.showInputDialog(
                             null,
                             "Selecione o que deseja editar:\n"
-                            + "1: Editar nome\n"
-                            + "2: Editar CPF\n"
+                            + "1: Alterar nome\n"
+                            + "2: Alterar CPF\n"
                             + "3: Voltar ao menu"
                     );
 
@@ -255,7 +255,7 @@ public class MenuClientes {
                             break;
 
                         case 2:
-                            editarCpfCliente(cpf);
+                            cpf = editarCpfCliente(cpf);
                             break;
 
                         case 3:
@@ -282,13 +282,60 @@ public class MenuClientes {
     }
     
     private void editarNomeCliente(String cpf) {
-    	// TODO Auto-generated method stub
 
-    	}
-    private void editarCpfCliente(String cpf) {
-    	// TODO Auto-generated method stub
+        try {
 
-    	}
+            String novoNome = JOptionPane.showInputDialog("Digite o novo nome:");
+
+            if (novoNome == null) {
+                return;
+            }
+
+            if (novoNome.isBlank()) {
+                JOptionPane.showMessageDialog(null, "Digite um nome válido!");
+                return;
+            }
+
+            cadastroClientes.atualizarNomeCliente(cpf, novoNome);
+
+            JOptionPane.showMessageDialog(null, "Nome atualizado com sucesso!");
+
+        } catch (NomeInvalidoException | ClienteNaoEncontradoException e) {
+
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        }
+    }
+    
+    private String editarCpfCliente(String cpf) {
+
+        try {
+
+            String novoCpf = JOptionPane.showInputDialog("Digite o novo CPF:");
+
+            if (novoCpf == null) {
+                return cpf;
+            }
+
+            if (novoCpf.isBlank()) {
+                JOptionPane.showMessageDialog(null, "Digite um CPF válido!");
+                return cpf;
+            }
+
+            cadastroClientes.atualizarCpfCliente(cpf, novoCpf);
+
+            JOptionPane.showMessageDialog(null, "CPF atualizado com sucesso!");
+
+            return novoCpf;
+
+        } catch (ClienteNaoEncontradoException |
+                 CpfInvalidoException |
+                 CpfDuplicadoException e) {
+
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return cpf;
+        }
+    }
     
     
 }
