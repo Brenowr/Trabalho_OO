@@ -634,7 +634,7 @@ public class MenuProdutos {
     			   				JOptionPane.showMessageDialog(null, "Informe um tamanho!");
     			   				break;
     			   				
-    			   			} else if(entrada != "P" || entrada != "M" || entrada != "G") {
+    			   			} else if(!entrada.equals("P") && !entrada.equals("M") && !entrada.equals("G")) {
     			   				JOptionPane.showMessageDialog(null, "Digite um tamanho válido");
     			   				break;
     			   				
