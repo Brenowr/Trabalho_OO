@@ -151,11 +151,57 @@ public class MenuProdutos {
 	}
            
        private void cadastrarComida() {
+    	   String entrada;
     	   String nomeProduto = JOptionPane.showInputDialog("Nome do produto:");
-           double precoProduto = Double.parseDouble(JOptionPane.showInputDialog("Preço em R$:"));
-           int estoque = Integer.parseInt(JOptionPane.showInputDialog("Quantidade em estoque:"));
+    	   
+    	   if(nomeProduto == null) {
+    		   return;
+    		   
+    	   } else if(nomeProduto.equals("")) {
+    		   JOptionPane.showMessageDialog(null, "Informe um nome!");
+    		   return;
+    		   
+    	   }
+    	   
+    	   entrada = JOptionPane.showInputDialog("Preço em R$:");
+    	   
+    	   if(entrada == null) {
+    		   return;
+    		   
+    	   } else if(entrada.equals("")) {
+    		   JOptionPane.showMessageDialog(null, "Informe um preço!");
+    		   return;
+    		   
+    	   }
+    	   
+           double precoProduto = Double.parseDouble(entrada);
            
-           int tempoPreparo = Integer.parseInt(JOptionPane.showInputDialog("Tempo de preparo em minutos:"));
+           entrada = JOptionPane.showInputDialog("Quantidade em estoque:");
+           
+           if(entrada == null) {
+        	   return;
+        	   
+           } else if(entrada.equals("")) {
+        	   JOptionPane.showMessageDialog(null, "Informe uma quantidade!");
+        	   return;
+        	   
+           } else if(Integer.parseInt(entrada) <= 0) {
+        	   JOptionPane.showMessageDialog(null, "Informe uma quantidade maior que zero!");
+           }
+           
+           int estoque = Integer.parseInt(entrada);
+           
+           entrada = JOptionPane.showInputDialog("Tempo de preparo em minutos:");
+           
+           if(entrada == null) {
+        	   return;
+        	   
+           } else if(entrada.equals("")) {
+        	   JOptionPane.showMessageDialog(null, "Informe um tempo de Preparo!");
+        	   
+           }
+           
+           int tempoPreparo = Integer.parseInt(entrada);
 
            boolean vegano = JOptionPane.showConfirmDialog(null,"É vegano?") == JOptionPane.YES_OPTION;
 
@@ -173,13 +219,88 @@ public class MenuProdutos {
        }
        
        private void cadastrarBebida() {
+    	   String entrada;
     	   String nomeProduto = JOptionPane.showInputDialog("Nome do produto:");
-           double precoProduto = Double.parseDouble(JOptionPane.showInputDialog("Preço em R$:"));
-           int estoque = Integer.parseInt(JOptionPane.showInputDialog("Quantidade em estoque:"));
+    	   
+    	   if(nomeProduto == null) {
+    		   return;
+    		   
+    	   } else if(nomeProduto.equals("")) {
+    		   JOptionPane.showMessageDialog(null, "Informe um nome!");
+    		   return;
+    		   
+    	   }
+    	   
+    	   entrada = JOptionPane.showInputDialog("Preço em R$:");
+    	   
+    	   if(entrada == null) {
+    		   return;
+    		   
+    	   } else if(entrada.equals("")) {
+    		   JOptionPane.showMessageDialog(null, "Informe um preço!");
+    		   return;
+    		   
+    	   }
+    	   
+           double precoProduto = Double.parseDouble(entrada);
+           
+           entrada = JOptionPane.showInputDialog("Quantidade em estoque:");
+           
+           if(entrada == null) {
+        	   return;
+        	   
+           } else if(entrada.equals("")) {
+        	   JOptionPane.showMessageDialog(null, "Informe uma quantidade!");
+        	   return;
+        	   
+           } else if(Integer.parseInt(entrada) <= 0) {
+        	   JOptionPane.showMessageDialog(null, "Informe uma quantidade maior que zero!");
+           }
+           
+           int estoque = Integer.parseInt(entrada);
+           
+           entrada = JOptionPane.showInputDialog("Tempo de preparo em minutos:");
+           
+           if(entrada == null) {
+        	   return;
+        	   
+           } else if(entrada.equals("")) {
+        	   JOptionPane.showMessageDialog(null, "Informe um tempo de Preparo!");
+        	   
+           }
            
            String tamanho = JOptionPane.showInputDialog("Tamanho (P, M ou G):");
-
-           double cafeina = Double.parseDouble(JOptionPane.showInputDialog("Quantidade de cafeína em mg:"));
+           
+           if(tamanho == null) {
+        	   return;
+        	   
+           } else if(tamanho.equals("")) {
+        	   JOptionPane.showMessageDialog(null, "Digite um tamanho!");
+        	   return;
+        	   
+           } else if(tamanho.equals("P") && tamanho.equals("M") && tamanho.equals("G")) {
+        	   JOptionPane.showMessageDialog(null, "Digite um tamanho válido");
+        	   return;
+        	   
+           }
+           
+           
+           entrada = JOptionPane.showInputDialog("Quantidade de cafeína em mg:");
+           
+           if(entrada == null) {
+        	   return;
+        	   
+           } else if(entrada.equals("")) {
+        	   JOptionPane.showMessageDialog(null,"Informe uma quantidade!");
+        	   return;
+        	   
+           } else if(Integer.parseInt(entrada) < 0) {
+        	   JOptionPane.showMessageDialog(null, "Digite uma dosagem positiva!");
+        	   return;
+        	   
+           }
+           
+           double cafeina = Double.parseDouble(entrada);
 
            boolean quente = JOptionPane.showConfirmDialog(null,"É uma bebida quente?") == JOptionPane.YES_OPTION;
 
@@ -459,7 +580,7 @@ public class MenuProdutos {
     		   		
     		   		case 6: {
     		   			
-    		   			boolean vegano = JOptionPane.showConfirmDialog(null,"O produto será modificado para vegano?") == JOptionPane.YES_OPTION;
+    		   			boolean vegano = JOptionPane.showConfirmDialog(null,"O produto é vegano?") == JOptionPane.YES_OPTION;
     		   			
     		   			comida.setVegano(vegano);
     		   			
@@ -472,7 +593,7 @@ public class MenuProdutos {
     		   		}
     		   		
     		   		case 7: {
-    		   			boolean gluten = JOptionPane.showConfirmDialog(null,"O produto será modificado para conter glúten?") == JOptionPane.YES_OPTION;
+    		   			boolean gluten = JOptionPane.showConfirmDialog(null,"O produto contém glúten?") == JOptionPane.YES_OPTION;
     		   			
     		   			comida.setGluten(gluten);
     		   			
@@ -483,7 +604,7 @@ public class MenuProdutos {
     		   		}
     		   		
     		   		case 8: {
-    		   			boolean confeitaria =  JOptionPane.showConfirmDialog(null,"O produto será modificado para ser de confeitaria?") == JOptionPane.YES_OPTION;
+    		   			boolean confeitaria =  JOptionPane.showConfirmDialog(null,"O produto será de confeitaria?") == JOptionPane.YES_OPTION;
     		   			
     		   			comida.setConfeitaria(confeitaria);
     		   			
@@ -673,7 +794,7 @@ public class MenuProdutos {
     			   		}
     			   		
     			   		case 7: {
-    			   			boolean quente =  JOptionPane.showConfirmDialog(null,"O produto será modificado para ser de confeitaria?") == JOptionPane.YES_OPTION;
+    			   			boolean quente =  JOptionPane.showConfirmDialog(null,"O produto será quente?") == JOptionPane.YES_OPTION;
     			   			
     			   			bebida.setQuente(quente);
     			   			
