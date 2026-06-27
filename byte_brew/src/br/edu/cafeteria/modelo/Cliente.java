@@ -23,8 +23,16 @@ public abstract class Cliente {
 		 return getXp()/10.0;
 	 }
 	
-	public void usarXPComoDesconto() {
-		removerXP(xp);
+	public double usarXPComoDesconto(double valorCompra) {
+		double desconto = calcularDesconto();
+		
+		if(desconto >= valorCompra) {
+			desconto = valorCompra;
+		}
+		
+		int xpUsado = (int) (desconto*10);
+		removerXP(xpUsado);
+		return desconto;
 	}
 			
 	public abstract void calcularXP(double valorTotal);
