@@ -151,6 +151,8 @@ public class MenuProdutos {
 	}
            
        private void cadastrarComida() {
+    	   boolean vegano, gluten, confeitaria;
+    	   int entradaInt;
     	   String entrada;
     	   String nomeProduto = JOptionPane.showInputDialog("Nome do produto:");
     	   
@@ -206,11 +208,29 @@ public class MenuProdutos {
            
            int tempoPreparo = Integer.parseInt(entrada);
 
-           boolean vegano = JOptionPane.showConfirmDialog(null,"É vegano?") == JOptionPane.YES_OPTION;
+           entradaInt = JOptionPane.showConfirmDialog(null,"É vegano?");
+           
+           if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION) {
+        	   return;
+        	   
+           }
+           vegano = entradaInt == JOptionPane.YES_OPTION;
+           
+           entradaInt = JOptionPane.showConfirmDialog(null,"Contém glútem?");
+           
+           if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION) {
+        	   return;
+        	   
+           }
+           gluten = entradaInt == JOptionPane.YES_OPTION;
 
-           boolean gluten = JOptionPane.showConfirmDialog(null,"Contém glútem?") == JOptionPane.YES_OPTION;
-
-           boolean confeitaria = JOptionPane.showConfirmDialog(null,"É um produto de confeitaria?") == JOptionPane.YES_OPTION;
+           entradaInt = JOptionPane.showConfirmDialog(null,"É um produto de confeitaria?");
+           
+           if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION) {
+        	   return;
+        	   
+           }
+           confeitaria = entradaInt == JOptionPane.YES_OPTION;
 
            Comida comida = new Comida(nomeProduto, precoProduto, estoque, tempoPreparo, vegano, gluten, confeitaria);
            
@@ -218,10 +238,10 @@ public class MenuProdutos {
            JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
            return;
        
-    	   
        }
        
        private void cadastrarBebida() {
+    	   boolean quente;
     	   String entrada;
     	   String nomeProduto = JOptionPane.showInputDialog("Nome do produto:");
     	   
@@ -311,8 +331,14 @@ public class MenuProdutos {
            
            double cafeina = Double.parseDouble(entrada);
 
-           boolean quente = JOptionPane.showConfirmDialog(null,"É uma bebida quente?") == JOptionPane.YES_OPTION;
-
+           int entradaInt = JOptionPane.showConfirmDialog(null,"É uma bebida quente?");
+           
+           if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION ) {
+        	   return;
+        	   
+           }
+           quente = entradaInt == JOptionPane.YES_OPTION;
+           
            Bebida bebida = new Bebida(nomeProduto, precoProduto, estoque, tamanho, cafeina, quente);
 
            cadastroProduto.cadastrarProduto(bebida);
@@ -322,7 +348,7 @@ public class MenuProdutos {
        }
        
        private void buscarProduto() {
-    	   String texto = "";
+    	String texto = "";
        	Produto produto = null;
        	int codigoProduto = 0;
        	String listaProduto = "";
@@ -588,8 +614,15 @@ public class MenuProdutos {
     		   		}
     		   		
     		   		case 6: {
+    		   			boolean vegano;
     		   			
-    		   			boolean vegano = JOptionPane.showConfirmDialog(null,"O produto é vegano?") == JOptionPane.YES_OPTION;
+    		   			int entradaInt = JOptionPane.showConfirmDialog(null,"O produto é vegano?");
+    		   			
+    		   			if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION) {
+    		         	   return;
+    		         	   
+    		            }
+    		            vegano = entradaInt == JOptionPane.YES_OPTION;
     		   			
     		   			comida.setVegano(vegano);
     		   			
@@ -602,7 +635,15 @@ public class MenuProdutos {
     		   		}
     		   		
     		   		case 7: {
-    		   			boolean gluten = JOptionPane.showConfirmDialog(null,"O produto contém glúten?") == JOptionPane.YES_OPTION;
+    		   			boolean gluten;
+    		   			
+    		   			int entradaInt = JOptionPane.showConfirmDialog(null,"O produto contém glúten?");
+    		   			
+    		   			if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION) {
+    		         	   return;
+    		         	   
+    		            }
+    		            gluten = entradaInt == JOptionPane.YES_OPTION;
     		   			
     		   			comida.setGluten(gluten);
     		   			
@@ -613,7 +654,14 @@ public class MenuProdutos {
     		   		}
     		   		
     		   		case 8: {
-    		   			boolean confeitaria =  JOptionPane.showConfirmDialog(null,"O produto será de confeitaria?") == JOptionPane.YES_OPTION;
+    		   			boolean confeitaria;
+    		   			int entradaInt =  JOptionPane.showConfirmDialog(null,"O produto será de confeitaria?");
+    		   			
+    		   			if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION) {
+    		         	   return;
+    		         	   
+    		            }
+    		            confeitaria = entradaInt == JOptionPane.YES_OPTION;
     		   			
     		   			comida.setConfeitaria(confeitaria);
     		   			
@@ -803,7 +851,14 @@ public class MenuProdutos {
     			   		}
     			   		
     			   		case 7: {
-    			   			boolean quente =  JOptionPane.showConfirmDialog(null,"O produto será quente?") == JOptionPane.YES_OPTION;
+    			   			boolean quente;
+    			   			int entradaInt =  JOptionPane.showConfirmDialog(null,"O produto será quente?");
+    			   			
+    			   			if(entradaInt == JOptionPane.CANCEL_OPTION || entradaInt ==  JOptionPane.CLOSED_OPTION) {
+    			         	   return;
+    			         	   
+    			            }
+    			            quente = entradaInt == JOptionPane.YES_OPTION;
     			   			
     			   			bebida.setQuente(quente);
     			   			
