@@ -15,9 +15,9 @@ public class MenuPedidos {
 
     private int selecionar;
     private String entrada;
-    GerenciadorPedidos gerenciadorPedidos;
-    CadastroProduto cadastroProduto; 
-    CadastroCliente cadastroCliente;
+    private GerenciadorPedidos gerenciadorPedidos;
+    private CadastroProduto cadastroProduto; 
+    private CadastroCliente cadastroCliente;
     
     
     public MenuPedidos(GerenciadorPedidos gerenciadorPedidos,CadastroProduto cadastroProduto, CadastroCliente cadastroCliente) {
@@ -55,155 +55,31 @@ public class MenuPedidos {
                 switch (selecionar) {
                 
                 	case 1: {
-                		Cliente cliente;
-                		String clienteEscolha;
-                		clienteEscolha = JOptionPane.showInputDialog(null,"Digite o codigo do cliente\n" +
-                															"Digite 0 para cliente casual");
-                		int casual = Integer.parseInt(clienteEscolha);
-                		if (casual == 0)
-                		{
-                			gerenciadorPedidos.criarPedido(null);
-                		}
-                		else {
-                			try {
-                				cliente = cadastroCliente.buscarCliente(clienteEscolha);
-                			}
-                			catch(ClienteNaoEncontradoException e) {
-                				JOptionPane.showMessageDialog(null, e.getMessage());
-                				break;
-                			}
-                			gerenciadorPedidos.criarPedido(cliente);
-                		}
-                		
+                		criarPedido();
                 		break;
                 	}
 
                     case 2: {
-
-                        
-                        JOptionPane.showMessageDialog(null, "Cadastro");
-
+                    	removerPedido();
                         break;
                     }
 
                     case 3: {
-                    	String lista = gerenciadorPedidos.listarPedidos();
-                    	if(lista.isEmpty()) {
-                			JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
-                			break;
-                		}
-                    	String codigo = JOptionPane.showInputDialog(null, lista + "\nDigite o codigo do pedido que deseja editar:");
-                		if (codigo == null) {
-                			break;
-                		}
-                		
-                		int editar = Integer.parseInt(codigo);
-
-                        Pedido pedido = gerenciadorPedidos.buscarPedido(editar);
-                        if (pedido == null) {
-                            JOptionPane.showMessageDialog(null, "Pedido não encontrado!");
-                            break;
-                        }
-                        int selecionarSub=0;
-                        do {
-	                        try {
-			                        String entradaSub = JOptionPane.showInputDialog(null, "Selecione oque deseja fazer:\n" +
-			                        													"1: Adicionar item\n" +
-			                        													"2: Remover item\n" +
-			                        													"3: Voltar ao menu");
-			                        
-			                        if (entradaSub == null) {
-			                            selecionarSub = 3;
-			                        } else if (entradaSub.isEmpty()) {
-			                            JOptionPane.showMessageDialog(null,"Digite uma opção!");
-			                            continue;
-			                        } else {
-			                            selecionarSub = Integer.parseInt(entradaSub);
-			                        }
-			                        
-			                        switch(selecionarSub) {
-				                        case 1: {
-				                        	String produtoAdicionado,quantidadeAdicionada,listaProduto;
-				                        	listaProduto = cadastroProduto.listarProdutos();
-				                        	if (listaProduto.isEmpty()) {
-				                        		JOptionPane.showMessageDialog(null, "Não há produtos cadastrados.");
-				                    			break;
-				                    		}
-				                        	produtoAdicionado = JOptionPane.showInputDialog(null, listaProduto + "\nDigite o codigo do produto a ser adicionado:");
-
-				                    		if (produtoAdicionado == null) {
-				                    			break;
-				                    		}
-				                    		int codigoProduto = Integer.parseInt(produtoAdicionado);
-				                    		Produto produto = cadastroProduto.buscarProduto(codigoProduto);
-				                    		quantidadeAdicionada = JOptionPane.showInputDialog(null, "\nDigite o codigo do produto a ser adicionado: \n"+
-				                    																"Quantidade em estoque: " + produto.getQuantidadeEstoque());
-				                    		int quantidade = Integer.parseInt(quantidadeAdicionada);
-				                    		if(quantidade == 1) {
-					                    		try {
-					                    			pedido.adicionarItem(produto);	
-					                    		}
-					                    		catch(EstoqueInsuficienteException e) {
-					                    			JOptionPane.showMessageDialog(null, e.getMessage());
-					                    			break;
-					                    		}
-				                    		}
-				                    		else {
-					                    		try {
-					                    			pedido.adicionarItem(produto,quantidade);	
-					                    		}
-					                    		catch(EstoqueInsuficienteException e) {
-					                    			JOptionPane.showMessageDialog(null, e.getMessage());
-					                    			break;
-					                    		}
-				                    		}
-				                        	break;
-				                        }
-				                        
-					                    case 2: {
-					                    	break;
-					                    }
-					                    
-					                    case 3: {
-					                    	break;
-					                    }
-							            
-								        default: {
-								        	JOptionPane.showMessageDialog(null,"Opção inválida!");
-								        	break;
-								        }
-			                        }
-	                        	}
-	                        catch (NumberFormatException e) {
-	                        	JOptionPane.showMessageDialog(null,"Digite apenas números!");
-	                        }
-                        }while(selecionarSub!=3);
-                        break;
+                    	editarPedido();
+                    	break;
                     }
 
-                    case 4: {
-
-                        // editarPedido();
-                        JOptionPane.showMessageDialog(null, "Edita");
+                    case 4: {                       
+                    	visualizarPedido();
 
                         break;
                     }
 
                     case 5: {
-
-                    	String lista = gerenciadorPedidos.listarPedidos();
-                    	if(lista.isEmpty()) {
-                			JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
-                			break;
-                		}
-                    	else
-                    	{
-                    		JOptionPane.showMessageDialog(null, lista);
-
-                            break;
+                    	listarPedidos();
+                        break;
                     	}
                     	
-                    }
 
                     case 6: {
                         break;
@@ -230,6 +106,249 @@ public class MenuPedidos {
             }
 
         } while (selecionar != 7);
+    }
+    private void criarPedido() {
+        Cliente cliente;
+        String clienteEscolha;
+
+        clienteEscolha = JOptionPane.showInputDialog(null,"Digite o CPF do cliente\nDigite 0 para cliente casual");
+
+        if (clienteEscolha == null) {
+            return;
+        }
+
+        if (clienteEscolha.equals("0")) {
+            gerenciadorPedidos.criarPedido(null);
+        } else {
+            try {
+                cliente = cadastroCliente.buscarCliente(clienteEscolha);
+            } catch (ClienteNaoEncontradoException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+                return;
+            }
+
+            gerenciadorPedidos.criarPedido(cliente);
+        }
+    }
+    private void editarPedido() {
+
+        String lista = gerenciadorPedidos.listarPedidos();
+
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
+            return;
+        }
+
+        String codigo = JOptionPane.showInputDialog(null,lista + "\nDigite o codigo do pedido que deseja editar:");
+
+        if (codigo == null) {
+            return;
+        }
+
+        int editar = Integer.parseInt(codigo);
+
+        Pedido pedido = gerenciadorPedidos.buscarPedido(editar);
+
+        if (pedido == null) {
+            JOptionPane.showMessageDialog(null, "Pedido não encontrado!");
+            return;
+        }
+
+        int selecionarSub = 0;
+
+        do {
+
+            try {
+
+                String entradaSub = JOptionPane.showInputDialog(
+                        null,
+                        "Selecione o que deseja fazer:\n"
+                                + "1: Adicionar item\n"
+                                + "2: Remover item\n"
+                                + "3: Voltar ao menu");
+
+                if (entradaSub == null) {
+                    selecionarSub = 3;
+                } else if (entradaSub.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Digite uma opção!");
+                    continue;
+                } else {
+                    selecionarSub = Integer.parseInt(entradaSub);
+                }
+
+                switch (selecionarSub) {
+
+                case 1:
+                    adicionarItem(pedido);
+                    break;
+
+                case 2:
+                    removerItem(pedido);
+                    break;
+
+                case 3:
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Opção inválida!");
+                    break;
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Digite apenas números!");
+            }
+
+        } while (selecionarSub != 3);
+    }
+    private void adicionarItem(Pedido pedido) {
+
+        String listaProduto = cadastroProduto.listarProdutos();
+
+        if (listaProduto.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não há produtos cadastrados.");
+            return;
+        }
+
+        String produtoAdicionado = JOptionPane.showInputDialog(null, listaProduto + "\nDigite o codigo do produto a ser adicionado:");
+
+        if (produtoAdicionado == null) {
+            return;
+        }
+
+        int codigoProduto = Integer.parseInt(produtoAdicionado);
+
+        Produto produto = cadastroProduto.buscarProduto(codigoProduto);
+        
+        if (produto == null) {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+            return;
+        }
+
+        String quantidadeAdicionada = JOptionPane.showInputDialog(null,"Digite a quantidade desejada:\nQuantidade em estoque: " + produto.getQuantidadeEstoque());
+
+        if (quantidadeAdicionada == null) {
+            return;
+        }
+        int quantidade=0;
+        try {
+        	quantidade = Integer.parseInt(quantidadeAdicionada);
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(null,"Digite apenas números!");
+        }
+        
+        try {
+
+            if (quantidade == 1) {
+                pedido.adicionarItem(produto);
+            } else {
+                pedido.adicionarItem(produto, quantidade);
+            }
+
+        } catch (EstoqueInsuficienteException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    private void removerItem(Pedido pedido) {
+    	
+
+        String listaProdutos = pedido.listarProdutos();
+
+        if (listaProdutos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não há produtos cadastrados.");
+            return;
+        }
+
+        String produtoRemovido = JOptionPane.showInputDialog(null, listaProdutos + "\nDigite o codigo do produto a ser Removido:");
+
+        if (produtoRemovido == null) {
+            return;
+        }
+
+        int codigoProduto = Integer.parseInt(produtoRemovido);
+
+        Produto produto = cadastroProduto.buscarProduto(codigoProduto);
+        
+        if (produto == null) {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+            return;
+        }
+
+        String quantidadeRemovida = JOptionPane.showInputDialog(null, "Produto: " + pedido.buscarItem(produto).getProduto().getNomeProduto() + 
+        														"\nDigite a quantidade a ser removida:\n"+
+        														"Quantidade no carrinho: " 
+        														+ pedido.buscarItem(produto).getQuantidade());
+
+        if (quantidadeRemovida == null) {
+            return;
+        }
+        int quantidade;
+        try {
+        	quantidade = Integer.parseInt(quantidadeRemovida);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,"Digite apenas números!");
+            return;
+        }
+        pedido.removerItem(produto, quantidade);
+        
+        
+    }
+    private void listarPedidos() {
+
+        String lista = gerenciadorPedidos.listarPedidos();
+
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(null, lista);
+    }
+    private void removerPedido() {
+    	String lista = gerenciadorPedidos.listarPedidos();
+    	if(lista.isEmpty())
+    	{
+    		JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
+    		return;
+    	}
+		String entrada = JOptionPane.showInputDialog(null, gerenciadorPedidos.listarPedidos() + "Digite o codigo do pedido a ser removido:");
+		if (entrada == null) {
+			return;
+		}
+
+	    if (gerenciadorPedidos.removerPedido(entrada)) {
+	        JOptionPane.showMessageDialog(null, "Pedido removido com sucesso!");
+	    } else {
+	        JOptionPane.showMessageDialog(null, "Pedido não encontrado!");
+	    }
+	}
+	private void visualizarPedido() {
+		String listaPedidos = gerenciadorPedidos.listarPedidos();
+        if (listaPedidos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
+            return;
+        }
+		String codigo = JOptionPane.showInputDialog(null,listaPedidos + "Digite o codigo do pedido que deseja visualizar");
+        if (codigo == null) {
+            return;
+        }
+        int visualizar = Integer.parseInt(codigo);
+
+        Pedido pedido = gerenciadorPedidos.buscarPedido(visualizar);
+
+        if (pedido == null) {
+            JOptionPane.showMessageDialog(null, "Pedido não encontrado!");
+            return;
+        }
+        String nome;
+        if(pedido.getCliente()==null)
+        {
+        	nome = "Cliente casual";
+        }
+        else {
+        	 nome = pedido.getCliente().getNome();
+        }
+        JOptionPane.showMessageDialog(null, "Pedido de: "+ nome+ " | Codigo: "+ pedido.getCodigoPedido()+"\n" +pedido.listarProdutos());
     }
 }
 

@@ -44,8 +44,10 @@ public abstract class Produto {
 			EstoqueInsuficienteException estoqueInsuficiente = new EstoqueInsuficienteException("Estoque do produto " + nomeProduto + " insuficiente. Quantidade disponivel: " + quantidadeEstoque);
 			throw estoqueInsuficiente;
 		}
-		
 		this.quantidadeEstoque -= quantidade;
+	}
+	public void adicionarEstoque(int quantidade) {
+		this.quantidadeEstoque += quantidade;
 	}
 	
 }

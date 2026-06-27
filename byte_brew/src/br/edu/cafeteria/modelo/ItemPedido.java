@@ -18,4 +18,7 @@ public class ItemPedido {
 	{
 		return produto.getPrecoBase()*quantidade;
 	}
+	public void diminuirQuantidade(int quantidade) {
+		this.quantidade -=quantidade;
+	}
 }

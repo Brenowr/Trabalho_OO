@@ -30,10 +30,7 @@ public class GerenciadorPedidos {
 	              + "\n";
 	    }
 	    return texto;
-	    
-	    // rodar isso no menu com o listarPedidos:
-	    //JOptionPane.showMessageDialog(null, gerenciadorPedidos.listarPedidos()); ou parecido, usando o showInputDialog caso queira algum input 
-	    //criar mensagem tambem no menu caso listarPedidos esteja vazio pra nao criar uma caixa vazia
+	   
 	    
 	}
 	public Pedido buscarPedido(int entrada) {
@@ -44,22 +41,16 @@ public class GerenciadorPedidos {
 			}
 		return null;
 	}
+	
 
-	public void removerPedido() {
-		if(pedidos.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
-			return;
-		}
-		
-		String entrada = JOptionPane.showInputDialog(null, listarPedidos() + "\nDigite o codigo do pedido a ser removido:");
-		if (entrada == null) {
-			return;
-		}
-		
+	public boolean removerPedido(String entrada) {
 		int codigoRemover = Integer.parseInt(entrada);
-
-		pedidos.remove(buscarPedido(codigoRemover));
-		JOptionPane.showMessageDialog(null,"Pedido não encontrado!");
+		Pedido pedido =buscarPedido(codigoRemover);
+	    if (pedido == null) {
+	        return false;
+	    }
+		pedidos.remove(pedido);
+		return true;
 	}
 	
 } //adicinar try catch no parseint do codigoremover com digite um codigo valido

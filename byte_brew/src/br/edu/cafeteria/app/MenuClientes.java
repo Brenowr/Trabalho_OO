@@ -8,7 +8,7 @@ public class MenuClientes {
 
     private int selecionar;
     private String entrada;
-    CadastroCliente cadastroClientes;
+    private CadastroCliente cadastroClientes;
     
     public MenuClientes(CadastroCliente cadastroClientes) {
 

@@ -22,10 +22,36 @@ public class Pedido {
 	}
 	
 	public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
-		produto.retirarEstoque(quantidade);
-		itens.add(new ItemPedido(produto, quantidade));
+			produto.retirarEstoque(quantidade);
+			itens.add(new ItemPedido(produto, quantidade));
 	}
 	
+	public String listarProdutos() {
+
+	    String texto = "";
+
+	    for (ItemPedido item : itens) {
+
+	        double subtotal = item.getProduto().getPrecoBase() * item.getQuantidade();
+
+	        texto += "Produto: " + item.getProduto().getNomeProduto()
+	              + " | Quantidade: " + item.getQuantidade()
+	              + " | Subtotal: R$ " + subtotal
+	              + " | Codigo: " + item.getProduto().getCodigoProduto()
+	              + "\n";
+	    }
+
+	    return texto;
+	}
+	public ItemPedido buscarItem(Produto produto) {
+
+	    for (ItemPedido item : itens) {
+	        if (item.getProduto().equals(produto)) {
+	            return item;
+	        }
+	    }
+	    return null;
+	}
 	public int getCodigoPedido() {
 		return codigoPedido;
 	}
@@ -52,7 +78,21 @@ public class Pedido {
 		else {
 			cliente.calcularXP(total);
 		}
-		
 	}
+		public void removerItem(Produto produto, int quantidade) {
+		    for (ItemPedido item : itens) {
+		        if (item.getProduto().equals(produto)) {
 
-}
+		            if (item.getQuantidade() <= quantidade) {
+		            	item.diminuirQuantidade(quantidade);
+		                itens.remove(item);
+		            } else {
+		                item.diminuirQuantidade(quantidade);
+		            }
+
+		            produto.adicionarEstoque(quantidade);
+		            return;
+		        }
+		    }	
+		}
+	}

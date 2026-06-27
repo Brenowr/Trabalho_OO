@@ -10,7 +10,7 @@ import br.edu.cafeteria.modelo.Produto;
 public class MenuProdutos {
 	 private int selecionar;
 	 private String entrada;
-	CadastroProduto cadastroProduto;
+	 private CadastroProduto cadastroProduto;
 	
 	   public MenuProdutos(CadastroProduto cadastroProduto) {
 		   
