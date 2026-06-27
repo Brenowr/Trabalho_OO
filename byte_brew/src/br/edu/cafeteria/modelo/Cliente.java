@@ -52,4 +52,8 @@ public abstract class Cliente {
 	 public void setNome(String novoNome) {
 		 nomeCliente = novoNome;
 	 }
+	 
+	 public void setCpf(String novoCpf) {
+		    cpf = novoCpf;
+		}
 }

@@ -23,20 +23,23 @@ public class CadastroCliente {
 			throw new ClienteNaoEncontradoException();
 		}
 		
-		public boolean cadastrarCliente(Cliente cliente) throws NomeInvalidoException, CpfInvalidoException, CpfDuplicadoException, ClienteNaoEncontradoException {
-			if(!nomeValido(cliente.getNome())) {
-				throw new NomeInvalidoException();
-			}
-			
-			if(!cpfValido(cliente.getCpf())) {
-				throw new CpfInvalidoException();
-			}
-			
-			if(buscarCliente(cliente.getCpf()) != null) {
-				throw new CpfDuplicadoException();
-			}
-			clientes.add(cliente);
-			return true;
+		public boolean cadastrarCliente(Cliente cliente) 
+		        throws NomeInvalidoException, CpfInvalidoException, CpfDuplicadoException {
+
+		    if (!nomeValido(cliente.getNome())) {
+		        throw new NomeInvalidoException();
+		    }
+
+		    if (!cpfValido(cliente.getCpf())) {
+		        throw new CpfInvalidoException();
+		    }
+
+		    if (cpfJaExiste(cliente.getCpf())) {
+		        throw new CpfDuplicadoException();
+		    }
+
+		    clientes.add(cliente);
+		    return true;
 		}
 		
 		public String listarClientes() {
@@ -64,41 +67,62 @@ public class CadastroCliente {
 			return true;
 		}
 		
-		public boolean atualizarNomeCliente(String cpf, String novoNome) throws NomeInvalidoException, ClienteNaoEncontradoException{
-			Cliente cliente = buscarCliente(cpf);
-			
-			if(cliente == null) {
-				throw new ClienteNaoEncontradoException();
-			}
-			if(!nomeValido(novoNome)) {
-				throw new NomeInvalidoException();
-			}
-			cliente.setNome(novoNome);
-			return true;
+		public boolean atualizarNomeCliente(String cpf, String novoNome)
+		        throws NomeInvalidoException, ClienteNaoEncontradoException {
+
+		    Cliente cliente = buscarCliente(cpf);
+
+		    if(!nomeValido(novoNome)) {
+		        throw new NomeInvalidoException();
+		    }
+
+		    cliente.setNome(novoNome);
+		    return true;
+		}
+		
+		public boolean atualizarCpfCliente(String cpfAtual, String novoCpf)
+		        throws ClienteNaoEncontradoException, CpfInvalidoException, CpfDuplicadoException {
+
+		    Cliente cliente = buscarCliente(cpfAtual);
+
+		    if (!cpfValido(novoCpf)) {
+		        throw new CpfInvalidoException();
+		    }
+
+		    if (cpfJaExiste(novoCpf)) {
+		        throw new CpfDuplicadoException();
+		    }
+
+		    cliente.setCpf(novoCpf);
+
+		    return true;
 		}
 		
 		public int quantidadeCliente() {
 			return clientes.size();
 		}
 		
-		public boolean promoverParaVip(String cpf) throws ClienteNaoEncontradoException{
-			Cliente cliente = buscarCliente(cpf);
-			
-			if(cliente == null) {
-				throw new ClienteNaoEncontradoException();
-			}
-			if(!(cliente instanceof ClienteStandard)) { //já é vip
-				return false;
-			}
-			if(cliente.getXp() < 100) { //sem xp suficiente
-				return false;
-			}
-			
-			ClienteVip vip = new ClienteVip(cliente.getNome(), cliente.getCpf());
-			vip.adicionarXP(cliente.getXp());
-			clientes.add(vip);
-			clientes.remove(cliente);
-			return true;
+		public boolean promoverParaVip(String cpf)
+		        throws ClienteNaoEncontradoException {
+
+		    Cliente cliente = buscarCliente(cpf);
+
+		    if(!(cliente instanceof ClienteStandard)) {
+		        return false;
+		    }
+
+		    if(cliente.getXp() < 100) {
+		        return false;
+		    }
+
+		    ClienteVip vip = new ClienteVip(cliente.getNome(), cliente.getCpf());
+
+		    vip.adicionarXP(cliente.getXp());
+
+		    clientes.add(vip);
+		    clientes.remove(cliente);
+
+		    return true;
 		}
 		
 		private boolean nomeValido(String nome) {
@@ -106,6 +130,15 @@ public class CadastroCliente {
 				return false;
 			}
 			return true;
+		}
+		
+		private boolean cpfJaExiste(String cpf) {
+		    for (Cliente cliente : clientes) {
+		        if (cliente.getCpf().equals(cpf)) {
+		            return true;
+		        }
+		    }
+		    return false;
 		}
 		
 		private boolean cpfValido(String cpf) {
