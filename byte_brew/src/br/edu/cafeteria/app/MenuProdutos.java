@@ -645,6 +645,7 @@ public class MenuProdutos {
     			   			if(cadastroProduto.editarProduto(bebida)) {
         		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
         		   			}
+    			   			break;
     			   			
     			   		}
     			   		
@@ -667,6 +668,7 @@ public class MenuProdutos {
     			   			if(cadastroProduto.editarProduto(bebida)) {
         		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
         		   			}
+    			   			break;
     			   			
     			   		}
     			   		
@@ -678,6 +680,7 @@ public class MenuProdutos {
     			   			if(cadastroProduto.editarProduto(bebida)) {
         		   				JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
         		   			}
+    			   			break;
     			   			
     			   		}
     			   		
@@ -687,21 +690,13 @@ public class MenuProdutos {
     			   		
     			   		default: {
     			   			JOptionPane.showMessageDialog(null, "Opção inválida");
+    			   			break;
     			   		}
     			   }
     			   
     		   }
     		   
-    		   
-    		   
+    	   }
     	   
-    	   } 
-    	   
-    			   																					
-    	   
-    	   
-       
-       
-       
-       
+      
 }
