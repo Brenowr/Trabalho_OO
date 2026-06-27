@@ -172,6 +172,8 @@ public class MenuProdutos {
     		   JOptionPane.showMessageDialog(null, "Informe um preço!");
     		   return;
     		   
+    	   } else if(Integer.parseInt(entrada) < 0) {
+    		   JOptionPane.showMessageDialog(null, "Digite um preço válido!");
     	   }
     	   
            double precoProduto = Double.parseDouble(entrada);
@@ -186,7 +188,7 @@ public class MenuProdutos {
         	   return;
         	   
            } else if(Integer.parseInt(entrada) <= 0) {
-        	   JOptionPane.showMessageDialog(null, "Informe uma quantidade maior que zero!");
+        	   JOptionPane.showMessageDialog(null, "Digite uma quantidade válida!");
            }
            
            int estoque = Integer.parseInt(entrada);
@@ -198,6 +200,7 @@ public class MenuProdutos {
         	   
            } else if(entrada.equals("")) {
         	   JOptionPane.showMessageDialog(null, "Informe um tempo de Preparo!");
+        	   return;
         	   
            }
            
@@ -240,6 +243,10 @@ public class MenuProdutos {
     		   JOptionPane.showMessageDialog(null, "Informe um preço!");
     		   return;
     		   
+    	   } else if(Integer.parseInt(entrada) < 0) {
+    		   JOptionPane.showMessageDialog(null, "Digite um preço válido!");
+    		   return;
+    		   
     	   }
     	   
            double precoProduto = Double.parseDouble(entrada);
@@ -254,7 +261,8 @@ public class MenuProdutos {
         	   return;
         	   
            } else if(Integer.parseInt(entrada) <= 0) {
-        	   JOptionPane.showMessageDialog(null, "Informe uma quantidade maior que zero!");
+        	   JOptionPane.showMessageDialog(null, "Digite uma quantidade válida!");
+        	   return;
            }
            
            int estoque = Integer.parseInt(entrada);
@@ -266,6 +274,7 @@ public class MenuProdutos {
         	   
            } else if(entrada.equals("")) {
         	   JOptionPane.showMessageDialog(null, "Informe um tempo de Preparo!");
+        	   return;
         	   
            }
            
