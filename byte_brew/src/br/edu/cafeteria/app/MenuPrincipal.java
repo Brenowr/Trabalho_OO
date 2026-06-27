@@ -64,7 +64,7 @@ public class MenuPrincipal {
                     }
                     case 3: {
 
-                    	MenuPedidos menu = new MenuPedidos(gerenciadorPedidos);
+                    	MenuPedidos menu = new MenuPedidos(gerenciadorPedidos,cadastroProduto,cadastroCliente);
                         menu.menuPedidos();
                         break;
                     }

@@ -41,7 +41,7 @@ public abstract class Produto {
 	
 	public void retirarEstoque(int quantidade) throws EstoqueInsuficienteException {
 		if(quantidade > quantidadeEstoque) {
-			EstoqueInsuficienteException estoqueInsuficiente = new EstoqueInsuficienteException("Estoque do produto" + nomeProduto + "insuficiente. Quantidade disponivel: " + quantidadeEstoque);
+			EstoqueInsuficienteException estoqueInsuficiente = new EstoqueInsuficienteException("Estoque do produto " + nomeProduto + " insuficiente. Quantidade disponivel: " + quantidadeEstoque);
 			throw estoqueInsuficiente;
 		}
 		

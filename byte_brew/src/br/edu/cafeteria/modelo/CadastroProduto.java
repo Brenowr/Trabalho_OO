@@ -42,7 +42,7 @@ public class CadastroProduto {
 		String lista = "";
 		
 		if(produtos.isEmpty()) {
-			return "Nenhum produto cadastrado.";
+			return lista;
 			
 		}
 			

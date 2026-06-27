@@ -36,28 +36,29 @@ public class GerenciadorPedidos {
 	    //criar mensagem tambem no menu caso listarPedidos esteja vazio pra nao criar uma caixa vazia
 	    
 	}
+	public Pedido buscarPedido(int entrada) {
+		for (int i = 0; i < pedidos.size(); i++) {
+			if (pedidos.get(i).getCodigoPedido() == entrada){
+				return pedidos.get(i);
+				}
+			}
+		return null;
+	}
+
 	public void removerPedido() {
 		if(pedidos.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Não há pedidos cadastrados.");
 			return;
 		}
 		
-		String entrada = JOptionPane.showInputDialog(null, listarPedidos() + 
-													"\nDigite o codigo do pedido a ser removido:");
+		String entrada = JOptionPane.showInputDialog(null, listarPedidos() + "\nDigite o codigo do pedido a ser removido:");
 		if (entrada == null) {
 			return;
 		}
 		
 		int codigoRemover = Integer.parseInt(entrada);
 
-		for (int i = 0; i < pedidos.size(); i++) {
-			if (pedidos.get(i).getCodigoPedido() == codigoRemover) {
-					pedidos.remove(i);
-					JOptionPane.showMessageDialog(null,"Pedido removido com sucesso!");
-					return;
-			}
-		}
-		
+		pedidos.remove(buscarPedido(codigoRemover));
 		JOptionPane.showMessageDialog(null,"Pedido não encontrado!");
 	}
 	
