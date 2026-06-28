@@ -12,6 +12,7 @@ import br.edu.cafeteria.modelo.Cliente;
 import br.edu.cafeteria.modelo.ClienteStandard;
 import br.edu.cafeteria.modelo.ClienteVip;
 import br.edu.cafeteria.modelo.GerenciadorPedidos;
+import br.edu.cafeteria.modelo.ItemPedido;
 import br.edu.cafeteria.modelo.Pedido;
 import br.edu.cafeteria.modelo.Produto;
 import br.edu.cafeteria.servico.PromocaoEventoGeek;
@@ -249,6 +250,11 @@ public class MenuPedidos {
             JOptionPane.showMessageDialog(null,"Digite apenas números!");
             return;
         }
+        if(quantidade <= 0){
+            JOptionPane.showMessageDialog(null,
+                "Digite uma quantidade maior que zero.");
+            return;
+        }
         
         try {
 
@@ -286,12 +292,19 @@ public class MenuPedidos {
             JOptionPane.showMessageDialog(null, "Produto não encontrado!");
             return;
         }
+        
+        ItemPedido item = pedido.buscarItem(produto);
+
+        if(item == null){
+            JOptionPane.showMessageDialog(null,"Este produto não está no pedido.");
+            return;
+        }
 
         String quantidadeRemovida = JOptionPane.showInputDialog(null, "Produto: " + pedido.buscarItem(produto).getProduto().getNomeProduto() + 
         														"\nDigite a quantidade a ser removida:\n"+
         														"Quantidade no carrinho: " 
         														+ pedido.buscarItem(produto).getQuantidade());
-
+        
         if (quantidadeRemovida == null) {
             return;
         }
@@ -300,6 +313,11 @@ public class MenuPedidos {
         	quantidade = Integer.parseInt(quantidadeRemovida);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null,"Digite apenas números!");
+            return;
+        }
+        if(quantidade > item.getQuantidade() || quantidade<0){
+            JOptionPane.showMessageDialog(null,
+                "Quantidade inválida.");
             return;
         }
         pedido.removerItem(produto, quantidade);
@@ -361,7 +379,13 @@ public class MenuPedidos {
         else {
         	 nome = pedido.getCliente().getNome();
         }
-        JOptionPane.showMessageDialog(null, "Pedido de: "+ nome + " | Codigo: "+ pedido.getCodigoPedido()+"\n" + pedido.listarProdutos());
+        String listaProdutos = pedido.listarProdutos();
+        if(listaProdutos.isEmpty())
+        {
+        	JOptionPane.showMessageDialog(null, "Pedido de: "+ nome + " | Codigo: "+ pedido.getCodigoPedido()+"\nNao ha produtos neste pedido");
+        	return;
+        }
+        JOptionPane.showMessageDialog(null, "Pedido de: "+ nome + " | Codigo: "+ pedido.getCodigoPedido()+"\n" + listaProdutos);
     }
 	
 	private void finalizarPedido() {
@@ -407,6 +431,7 @@ public class MenuPedidos {
         }
         int exp;
         int promocao = (JOptionPane.showConfirmDialog(null, "Deseja aplicar uma promocao?"));
+        String nomePromocao = "Nenhuma";
         if (promocao == JOptionPane.CANCEL_OPTION || promocao == JOptionPane.CLOSED_OPTION){ 
         	return; 
         	}
@@ -432,11 +457,13 @@ public class MenuPedidos {
 	        		case 1:{
 	        			Promocional promocaoEventoGeek = new PromocaoEventoGeek();
 	        			total = promocaoEventoGeek.aplicarDesconto(pedido);
+	        			nomePromocao = "Evento Geek";
 	        			break;
 	        		}
 	        		case 2:{
 	        			Promocional promocaoFestivalGastronomico = new PromocaoFestivalGastronomico();
 	        			total = promocaoFestivalGastronomico.aplicarDesconto(pedido);
+	        			nomePromocao = "Festival Gastronomico";
 	        			break;
 	        			}	
 	        		case 3:{
@@ -495,9 +522,15 @@ public class MenuPedidos {
     							   "\n\n" + pedido.listarProdutos() + 
     							   "\nValor original: R$ " + String.format("%.2f", totalOriginal) +
     							   "\nDesconto: R$ " + String.format("%.2f", desconto) +
+    							   "\nPromocao aplicada:" + nomePromocao +
     						       "\nValor final: R$ " + String.format("%.2f", total);
     			if (pedido.getCliente() != null) {
-    			    mensagem += "\nXP recebido: +" + xpRecebido;
+    				if(xpRecebido>=0)
+    					mensagem += "\nXP recebido: " + xpRecebido;
+    				else
+    				{
+    					mensagem += "\nXP gasto: " + (-xpRecebido);
+    				}
     			}
 
     			mensagem += "\n\nPedido finalizado com sucesso!";
