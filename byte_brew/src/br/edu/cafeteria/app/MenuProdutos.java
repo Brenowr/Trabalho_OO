@@ -174,7 +174,7 @@ public class MenuProdutos {
     		   JOptionPane.showMessageDialog(null, "Informe um preço!");
     		   return;
     		   
-    	   } else if(Integer.parseInt(entrada) < 0) {
+    	   } else if(Double.parseDouble(entrada) < 0) {
     		   JOptionPane.showMessageDialog(null, "Digite um preço válido!");
     	   }
     	   
@@ -201,12 +201,15 @@ public class MenuProdutos {
         	   return;
         	   
            } else if(entrada.equals("")) {
-        	   JOptionPane.showMessageDialog(null, "Informe um tempo de Preparo!");
+        	   JOptionPane.showMessageDialog(null, "Informe um tempo de preparo!");
         	   return;
         	   
+           } else if(Double.parseDouble(entrada) <= 0) {
+        	   JOptionPane.showMessageDialog(null, "Informe um tempo de preparo válido!");
+        	   return;
            }
            
-           int tempoPreparo = Integer.parseInt(entrada);
+           double tempoPreparo = Double.parseDouble(entrada);
 
            entradaInt = JOptionPane.showConfirmDialog(null,"É vegano?");
            
@@ -263,7 +266,7 @@ public class MenuProdutos {
     		   JOptionPane.showMessageDialog(null, "Informe um preço!");
     		   return;
     		   
-    	   } else if(Integer.parseInt(entrada) < 0) {
+    	   } else if(Double.parseDouble(entrada) < 0) {
     		   JOptionPane.showMessageDialog(null, "Digite um preço válido!");
     		   return;
     		   
@@ -286,17 +289,6 @@ public class MenuProdutos {
            }
            
            int estoque = Integer.parseInt(entrada);
-           
-           entrada = JOptionPane.showInputDialog("Tempo de preparo em minutos:");
-           
-           if(entrada == null) {
-        	   return;
-        	   
-           } else if(entrada.equals("")) {
-        	   JOptionPane.showMessageDialog(null, "Informe um tempo de Preparo!");
-        	   return;
-        	   
-           }
            
            String tamanho = JOptionPane.showInputDialog("Tamanho (P, M ou G):");
            
@@ -323,8 +315,8 @@ public class MenuProdutos {
         	   JOptionPane.showMessageDialog(null,"Informe uma quantidade!");
         	   return;
         	   
-           } else if(Integer.parseInt(entrada) < 0) {
-        	   JOptionPane.showMessageDialog(null, "Digite uma dosagem positiva!");
+           } else if(Double.parseDouble(entrada) <= 0) {
+        	   JOptionPane.showMessageDialog(null, "Digite uma quantidade válida!");
         	   return;
         	   
            }
@@ -589,7 +581,7 @@ public class MenuProdutos {
     		   		}
     		   		
     		   		case 5: {
-    		   			int tempo;
+    		   			double tempo;
     		   			entrada = JOptionPane.showInputDialog("Tempo de preparo: " + comida.getTempoPreparo()  + " minutos\nInforme o novo tempo de preparo em minutos:");
     		   			
     		   			if(entrada == null) {
