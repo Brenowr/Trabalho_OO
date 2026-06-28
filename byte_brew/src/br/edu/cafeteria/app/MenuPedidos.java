@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import br.edu.cafeteria.excecao.ClienteNaoEncontradoException;
 import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
 import br.edu.cafeteria.excecao.NenhumProdutoException;
-import br.edu.cafeteria.excecao.XpInsuficienteException;
+import br.edu.cafeteria.excecao.PontosInsuficientesException;
 import br.edu.cafeteria.modelo.CadastroCliente;
 import br.edu.cafeteria.modelo.CadastroProduto;
 import br.edu.cafeteria.modelo.Cliente;
@@ -546,7 +546,7 @@ public class MenuPedidos {
         		    }
         		}
     		} 
-    		catch(XpInsuficienteException e) {
+    		catch(PontosInsuficientesException e) {
     			JOptionPane.showMessageDialog(null, e.getMessage()); 
     		}
     	}

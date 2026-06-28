@@ -1,7 +1,7 @@
 package br.edu.cafeteria.modelo;
 import java.util.ArrayList;
 import br.edu.cafeteria.excecao.EstoqueInsuficienteException;
-import br.edu.cafeteria.excecao.XpInsuficienteException;
+import br.edu.cafeteria.excecao.PontosInsuficientesException;
 
 public class Pedido {
 	private ArrayList<ItemPedido> itens;
@@ -80,7 +80,7 @@ public class Pedido {
 		}
 		return total;
 	}
-	public double finalizarCompra(boolean usarXP, double total) throws XpInsuficienteException {
+	public double finalizarCompra(boolean usarXP, double total) throws PontosInsuficientesException {
 
 	    if (cliente == null) {
 	        return total;

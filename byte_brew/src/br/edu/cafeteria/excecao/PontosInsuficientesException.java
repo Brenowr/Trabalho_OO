@@ -1,10 +1,10 @@
 package br.edu.cafeteria.excecao;
 
-public class XpInsuficienteException extends Exception{
+public class PontosInsuficientesException extends Exception{
 
 	private static final long serialVersionUID = 1L;
 
-	public XpInsuficienteException() {
+	public PontosInsuficientesException() {
 		super("Você não tem XP suficiente para realizar essa operação.");
 	}
 }

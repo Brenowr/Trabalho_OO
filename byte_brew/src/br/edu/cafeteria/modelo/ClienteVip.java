@@ -1,6 +1,6 @@
 package br.edu.cafeteria.modelo;
 
-import br.edu.cafeteria.excecao.XpInsuficienteException;
+import br.edu.cafeteria.excecao.PontosInsuficientesException;
 
 public class ClienteVip extends Cliente{
 	
@@ -15,10 +15,10 @@ public class ClienteVip extends Cliente{
 		adicionarXP(valorInt*2);
 	}
 	
-	public boolean gastarXP(double valorPedido) throws XpInsuficienteException{
+	public boolean gastarXP(double valorPedido) throws PontosInsuficientesException{
 		int xpNecessario = (int) (valorPedido*10);
 		if(getXp() < xpNecessario) {
-			throw new XpInsuficienteException();
+			throw new PontosInsuficientesException();
 		}
 		removerXP(xpNecessario);
 		return true;
