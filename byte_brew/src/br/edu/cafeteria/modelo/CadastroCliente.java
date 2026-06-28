@@ -111,7 +111,7 @@ public class CadastroCliente {
 		        return false;
 		    }
 
-		    if(cliente.getXp() < 100) {
+		    if(cliente.getXp() < 500) {
 		        return false;
 		    }
 

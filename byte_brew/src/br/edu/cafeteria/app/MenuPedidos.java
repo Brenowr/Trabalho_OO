@@ -9,6 +9,7 @@ import br.edu.cafeteria.excecao.XpInsuficienteException;
 import br.edu.cafeteria.modelo.CadastroCliente;
 import br.edu.cafeteria.modelo.CadastroProduto;
 import br.edu.cafeteria.modelo.Cliente;
+import br.edu.cafeteria.modelo.ClienteStandard;
 import br.edu.cafeteria.modelo.ClienteVip;
 import br.edu.cafeteria.modelo.GerenciadorPedidos;
 import br.edu.cafeteria.modelo.Pedido;
@@ -374,15 +375,29 @@ public class MenuPedidos {
         if (codigo == null) {
             return;
         }
-        int visualizar = Integer.parseInt(codigo);
+        int codigoFinalizar;
+        
+        try { 
+        	codigoFinalizar = Integer.parseInt(codigo); 
+        } 
+        catch(NumberFormatException e){
+        	JOptionPane.showMessageDialog(null, "Digite apenas números!"); return; 
+        }
 
-        Pedido pedido = gerenciadorPedidos.buscarPedido(visualizar);
+        Pedido pedido = gerenciadorPedidos.buscarPedido(codigoFinalizar);
 
         if (pedido == null) {
             JOptionPane.showMessageDialog(null, "Pedido não encontrado!");
             return;
         }
+        if (pedido.pedidoVazio()) { 
+        	JOptionPane.showMessageDialog(null, "O pedido não possui itens."); 
+        	return; 
+        }
+        double total = pedido.calcularTotal();
+        double totalOriginal = total;
         String nome;
+        
         if(pedido.getCliente() == null)
         {
         	nome = "Cliente casual";
@@ -391,92 +406,118 @@ public class MenuPedidos {
         	 nome = pedido.getCliente().getNome();
         }
         int exp;
-        int promocao = (JOptionPane.showConfirmDialog(null, "Deseja adicionar a promocao?"));
-        if(promocao==JOptionPane.YES_OPTION)	
+        int promocao = (JOptionPane.showConfirmDialog(null, "Deseja aplicar uma promocao?"));
+        if (promocao == JOptionPane.CANCEL_OPTION || promocao == JOptionPane.CLOSED_OPTION){ 
+        	return; 
+        	}
+        else if(promocao==JOptionPane.YES_OPTION)	
         {
         	int escolha=0;
-        	Promocional promocaoEventoGeek = new PromocaoEventoGeek();
-        	Promocional promocaoFestivalGastronomico = new PromocaoFestivalGastronomico();
 	        	String escolhaPromocao = JOptionPane.showInputDialog(null, "Qual promocao deseja adicionar?\n" +
-	        									   "1: Evento Geek. (10% off bebidas)\n" +
-	        									   "2: Festival Gastronomico. (20% off Comidas)\n"+
+	        									   "1: Evento Geek. (10% off nas bebidas)\n" +
+	        									   "2: Festival Gastronomico. (20% off nas Comidas)\n"+
 	        									   "3: Voltar");
+	        	if (escolhaPromocao == null) {
+	        	    return;
+	        	}
 	        	if(escolhaPromocao.isEmpty())
 	        	{
-	        		escolha=3;
+	        		JOptionPane.showMessageDialog(null, "Digite uma opcao!");
 	        		return;
 	        	}
 	        	try {
 	        		escolha = Integer.parseInt(escolhaPromocao);
+		        		
+	        		switch(escolha){
+	        		case 1:{
+	        			Promocional promocaoEventoGeek = new PromocaoEventoGeek();
+	        			total = promocaoEventoGeek.aplicarDesconto(pedido);
+	        			break;
+	        		}
+	        		case 2:{
+	        			Promocional promocaoFestivalGastronomico = new PromocaoFestivalGastronomico();
+	        			total = promocaoFestivalGastronomico.aplicarDesconto(pedido);
+	        			break;
+	        			}	
+	        		case 3:{
+	        			return;
+	        		}
+	        		default:{
+	        			JOptionPane.showMessageDialog(null, "Digite uma promocao valida!"); 
+	        			return;
+	        		}
+	        		}
 	        	}
 	        	catch(NumberFormatException e){
 	        		JOptionPane.showMessageDialog(null, "Digite apenas numeros!");
+	        		return;
 	        	}
-	        	double total;
-        		switch(escolha){
-        		case 1:{
-        			total = promocaoEventoGeek.aplicarDesconto(pedido);
-        			break;
-        		}
-        		case 2:{
-        			total = promocaoFestivalGastronomico.aplicarDesconto(pedido);
-        			break;
-        			}	
-        		case 3:{
-        			return;
-        		}
-        		default:{
-        			JOptionPane.showInputDialog(null, "Digite uma promocao valida!"); 
-        			return;
-        		}
-        		}
-        		String pedidoFinalizar = "Pedido de: " + nome + " | Codigo: " + 
-        								pedido.getCodigoPedido()+ pedido.listarProdutos()+
-        								"Valor total do pedido: R$ " + String.format("%.2f", total);
-    			if(pedido.getCliente() instanceof ClienteVip) {
-    				exp = JOptionPane.showConfirmDialog(null, "Deseja usar Xp ?");
-        			try
-        			{
-        				if(exp==JOptionPane.YES_OPTION){
-        					pedido.finalizarCompra(true,total);
-        					String codigoProduto = String.valueOf(pedido.getCodigoPedido());
-        					gerenciadorPedidos.removerPedido(codigoProduto); 
-        					JOptionPane.showMessageDialog(null, pedidoFinalizar +"\nPedido Finalizado !");
-        				}
-        				else if (exp==JOptionPane.NO_OPTION) {
-        					pedido.finalizarCompra(false, total);
-        					String codigoProduto = String.valueOf(pedido.getCodigoPedido());
-        					gerenciadorPedidos.removerPedido(codigoProduto);
-        					JOptionPane.showMessageDialog(null, pedidoFinalizar + "\nPedido Finalizado !");
-        				}
-        				else {
-        					return;
-        				}
-        			}
-        			catch (XpInsuficienteException e){
-        				JOptionPane.showMessageDialog(null, e.getMessage());
-        			}
-    			}
-    			else {
-        			try{
-        					pedido.finalizarCompra(true,total);
-        					String codigoProduto = String.valueOf(pedido.getCodigoPedido());
-        					gerenciadorPedidos.removerPedido(codigoProduto);
-        					JOptionPane.showMessageDialog(null, pedidoFinalizar + "\nPedido Finalizado !");
-        			}
-        			catch (XpInsuficienteException e){
-        				JOptionPane.showMessageDialog(null, e.getMessage());
-        				return;
-        			}	
-    			}
-        	
-        	
         }
-        else if(promocao==JOptionPane.NO_OPTION)
-        {
-        	
-        }
-        else return;
-	}
-}
+	        	
+	       	boolean usarXP=false;
+	        	
+        		
+    		if(pedido.getCliente() instanceof ClienteVip) {
+    			exp = JOptionPane.showConfirmDialog(null, "Deseja pagar usando XP ?");
+    			if (exp == JOptionPane.CANCEL_OPTION || exp == JOptionPane.CLOSED_OPTION){ 
+    		       	return; 
+    		       	}
+    				
+    			usarXP = (exp == JOptionPane.YES_OPTION);
+    			} 
+    		else if (pedido.getCliente() instanceof ClienteStandard && pedido.getCliente().getXp()>=10){
+    			exp = JOptionPane.showConfirmDialog( null, "Deseja utilizar XP para obter desconto nesta compra?"); 
+    			if (exp == JOptionPane.CANCEL_OPTION || exp == JOptionPane.CLOSED_OPTION) {
+    					return;
+    			}
+    			usarXP = (exp == JOptionPane.YES_OPTION);
+    		}
+    		int xpAntes = 0;
 
+    		if (pedido.getCliente() != null) {
+    		    xpAntes = pedido.getCliente().getXp();
+    		}		
+    
+    		try{
+    			total = pedido.finalizarCompra(usarXP, total);
+    			int xpRecebido = 0;
+
+    			if (pedido.getCliente() != null) {
+    			    xpRecebido = pedido.getCliente().getXp() - xpAntes;
+    			}
+    			
+    			double desconto = totalOriginal - total;
+    			
+    			gerenciadorPedidos.removerPedido( String.valueOf(pedido.getCodigoPedido()));
+    			
+    			String mensagem = "Pedido de: " + nome + 
+    							   "\nCódigo: " + pedido.getCodigoPedido() + 
+    							   "\n\n" + pedido.listarProdutos() + 
+    							   "\nValor original: R$ " + String.format("%.2f", totalOriginal) +
+    							   "\nDesconto: R$ " + String.format("%.2f", desconto) +
+    						       "\nValor final: R$ " + String.format("%.2f", total);
+    			if (pedido.getCliente() != null) {
+    			    mensagem += "\nXP recebido: +" + xpRecebido;
+    			}
+
+    			mensagem += "\n\nPedido finalizado com sucesso!";
+    			
+    			JOptionPane.showMessageDialog(null, mensagem); 
+        		if (pedido.getCliente() != null) {
+        		    try {
+        		        if (cadastroCliente.promoverParaVip(pedido.getCliente().getCpf())) {
+        		            JOptionPane.showMessageDialog(null,"Parabéns! O cliente foi promovido para Cliente VIP!");
+        		        }
+        		    } catch (ClienteNaoEncontradoException e) {
+        		        JOptionPane.showMessageDialog(null, e.getMessage());
+        		    }
+        		}
+    		} 
+    		catch(XpInsuficienteException e) {
+    			JOptionPane.showMessageDialog(null, e.getMessage()); 
+    		}
+    	}
+	}
+	
+    			
+        		

@@ -21,4 +21,7 @@ public class ItemPedido {
 	public void diminuirQuantidade(int quantidade) {
 		this.quantidade -=quantidade;
 	}
+	public void adicionarQuantidade(int quantidade) {
+	    this.quantidade += quantidade;
+	}
 }

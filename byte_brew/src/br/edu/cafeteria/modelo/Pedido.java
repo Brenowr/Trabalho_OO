@@ -27,8 +27,16 @@ public class Pedido {
 	}
 	
 	public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
-			produto.retirarEstoque(quantidade);
-			itens.add(new ItemPedido(produto, quantidade));
+		for (ItemPedido item : itens) {
+		    if (item.getProduto() == produto) {
+		        produto.retirarEstoque(quantidade);
+		        item.adicionarQuantidade(quantidade);
+		        return;
+		    }
+		}
+
+		produto.retirarEstoque(quantidade);
+		itens.add(new ItemPedido(produto, quantidade));
 	}
 	
 	public String listarProdutos() {
@@ -72,17 +80,38 @@ public class Pedido {
 		}
 		return total;
 	}
-	public void finalizarCompra(boolean usarXp,double total) throws XpInsuficienteException{
-		
-		if(cliente!=null){
-			if(usarXp && cliente instanceof ClienteVip) {
-				((ClienteVip) cliente).gastarXP(total);
-			}
-			else if(cliente!=null){
-				cliente.calcularXP(total);
-			}
-			
-		}
+	public double finalizarCompra(boolean usarXP, double total) throws XpInsuficienteException {
+
+	    if (cliente == null) {
+	        return total;
+	    }
+
+	    if (cliente instanceof ClienteVip) {
+
+	        if (usarXP) {
+	            ((ClienteVip) cliente).gastarXP(total);
+	            return 0;
+	        }
+
+	        cliente.calcularXP(total);
+	        return total;
+	    }
+
+	    if (cliente instanceof ClienteStandard) {
+
+	        if (usarXP) {
+	            double desconto = ((ClienteStandard) cliente).usarXPComoDesconto(total);
+	            total -= desconto;
+	        }
+
+	        cliente.calcularXP(total);
+	    }
+
+	    return total;
+	}
+	
+	public boolean pedidoVazio() {
+		return itens.isEmpty();
 	}
 		public void removerItem(Produto produto, int quantidade) {
 		    for (ItemPedido item : itens) {

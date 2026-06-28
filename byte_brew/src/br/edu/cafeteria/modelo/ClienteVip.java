@@ -20,7 +20,6 @@ public class ClienteVip extends Cliente{
 		if(getXp() < xpNecessario) {
 			throw new XpInsuficienteException();
 		}
-		
 		removerXP(xpNecessario);
 		return true;
 	}

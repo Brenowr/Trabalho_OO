@@ -24,16 +24,20 @@ public abstract class Cliente {
 	 }
 	
 	public double usarXPComoDesconto(double valorCompra) {
-		double desconto = calcularDesconto();
-		
-		if(desconto >= valorCompra) {
-			desconto = valorCompra;
-		}
-		
-		int xpUsado = (int) (desconto*10);
-		removerXP(xpUsado);
-		return desconto;
+
+	    double descontoMaximo = valorCompra * 0.5;
+
+	    double descontoDisponivel = calcularDesconto();
+
+	    double desconto = Math.min(descontoMaximo, descontoDisponivel);
+
+	    int xpUsado = (int) (desconto * 10);
+	    
+	    removerXP(xpUsado);
+
+	    return desconto;
 	}
+
 			
 	public abstract void calcularXP(double valorTotal);
 	
