@@ -12,11 +12,11 @@ public class ClienteVip extends Cliente{
 	public void calcularXP(double valorTotal){
 		int valorInt;
 		valorInt=(int) valorTotal;
-		adicionarXP(valorInt*2);
+		adicionarXP(valorInt*getrealParaXp()*2);
 	}
 	
 	public boolean gastarXP(double valorPedido) throws PontosInsuficientesException{
-		int xpNecessario = (int) (valorPedido*10);
+		int xpNecessario = (int) (valorPedido*getxpParaReal());
 		if(getXp() < xpNecessario) {
 			throw new PontosInsuficientesException();
 		}

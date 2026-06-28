@@ -10,6 +10,6 @@ public class ClienteStandard extends Cliente{
 	public void calcularXP(double valorTotal){
 		int valorInt;
 		valorInt=(int) valorTotal;
-		adicionarXP(valorInt);
+		adicionarXP(valorInt*getrealParaXp());
 	}
 }

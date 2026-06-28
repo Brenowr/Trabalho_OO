@@ -3,6 +3,8 @@ package br.edu.cafeteria.modelo;
 public abstract class Cliente {
 	private String nomeCliente,cpf;
 	private int xp;
+	private static int realParaXp=1;
+	private static int xpParaReal=10;
 	
 	public Cliente(String nomeCliente, String cpf) {
 		this.nomeCliente = nomeCliente;
@@ -18,9 +20,16 @@ public abstract class Cliente {
 	public void removerXP(int adicionar) {
 		 xp -= adicionar;
 	 }
-	
+	public int getrealParaXp()
+	{
+		return realParaXp;
+	}
+	public int getxpParaReal()
+	{
+		return xpParaReal;
+	}
 	public double calcularDesconto() {
-		 return getXp()/10.0;
+		 return getXp()/xpParaReal;
 	 }
 	
 	public double usarXPComoDesconto(double valorCompra) {
@@ -31,7 +40,7 @@ public abstract class Cliente {
 
 	    double desconto = Math.min(descontoMaximo, descontoDisponivel);
 
-	    int xpUsado = (int) (desconto * 10);
+	    int xpUsado = (int) (desconto * xpParaReal);
 	    
 	    removerXP(xpUsado);
 

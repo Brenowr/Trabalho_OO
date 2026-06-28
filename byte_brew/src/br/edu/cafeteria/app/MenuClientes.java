@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import br.edu.cafeteria.modelo.CadastroCliente;
 import br.edu.cafeteria.modelo.Cliente;
 import br.edu.cafeteria.modelo.ClienteStandard;
-
+import br.edu.cafeteria.modelo.ClienteVip;
 import br.edu.cafeteria.excecao.NomeInvalidoException;
 import br.edu.cafeteria.excecao.CpfInvalidoException;
 import br.edu.cafeteria.excecao.CpfDuplicadoException;
@@ -151,10 +151,20 @@ public class MenuClientes {
             }
 
             Cliente cliente = cadastroClientes.buscarCliente(cpf);
+            
+            String tipo;
 
-            String texto = "Nome: " + cliente.getNome()
-                    + "\nCPF: " + cliente.getCpf()
-                    + "\nXP: " + cliente.getXp();
+            if (cliente instanceof ClienteVip) {
+                tipo = "VIP";
+            } else {
+                tipo = "Standard";
+            }
+            
+            String texto =
+                    "Nome: " + cliente.getNome() +
+                    "\nCPF: " + cliente.getCpf() +
+                    "\nTipo: " + tipo +
+                    "\nXP: " + cliente.getXp();
 
             JOptionPane.showMessageDialog(null, texto);
 
@@ -224,6 +234,7 @@ public class MenuClientes {
             cadastroClientes.buscarCliente(cpf);
 
             int selecionarSub = 0;
+            
 
             do {
 

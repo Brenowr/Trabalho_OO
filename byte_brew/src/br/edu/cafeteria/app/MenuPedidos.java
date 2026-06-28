@@ -431,7 +431,7 @@ public class MenuPedidos {
         }
         int exp;
         int promocao = (JOptionPane.showConfirmDialog(null, "Deseja aplicar uma promocao?"));
-        String nomePromocao = "Nenhuma";
+        String nomePromocao = "Nenhuma promocao aplicada.";
         if (promocao == JOptionPane.CANCEL_OPTION || promocao == JOptionPane.CLOSED_OPTION){ 
         	return; 
         	}
@@ -522,7 +522,7 @@ public class MenuPedidos {
     							   "\n\n" + pedido.listarProdutos() + 
     							   "\nValor original: R$ " + String.format("%.2f", totalOriginal) +
     							   "\nDesconto: R$ " + String.format("%.2f", desconto) +
-    							   "\nPromocao aplicada:" + nomePromocao +
+    							   "\nPromocao aplicada: " + nomePromocao +
     						       "\nValor final: R$ " + String.format("%.2f", total);
     			if (pedido.getCliente() != null) {
     				if(xpRecebido>=0)
