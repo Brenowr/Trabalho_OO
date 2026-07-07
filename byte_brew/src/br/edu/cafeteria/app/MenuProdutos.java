@@ -592,7 +592,7 @@ public class MenuProdutos {
     		   				break;
     		   				
     		   			}
-    		   			tempo = Integer.parseInt(entrada);
+    		   			tempo = Double.parseDouble(entrada);
     		   			comida.setTempoPreparo(tempo);
     		   			
     		   			if(cadastroProduto.editarProduto(comida)) {
