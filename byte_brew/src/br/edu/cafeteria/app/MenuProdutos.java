@@ -299,7 +299,7 @@ public class MenuProdutos {
         	   JOptionPane.showMessageDialog(null, "Digite um tamanho!");
         	   return;
         	   
-           } else if(tamanho.equals("P") && tamanho.equals("M") && tamanho.equals("G")) {
+           } else if(!tamanho.equals("P") && !tamanho.equals("M") && !tamanho.equals("G")) {
         	   JOptionPane.showMessageDialog(null, "Digite um tamanho válido");
         	   return;
         	   
