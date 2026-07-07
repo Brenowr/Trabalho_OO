@@ -6,6 +6,9 @@ Prof. André Luiz Peron Martins Lanna
   
 ### Trabalho Prático de Orientação por Objetos  
 ---  
+- [Relatório](Relatorio_OO/OO_Relátorio_Sistema_de_Vendas_e_Fidelidade-2026_1.pdf)
+- [Diagrama UML](Relatorio_OO/Trabalho_de_OO-drawio.png)
+
   
 ### Cenário: Sistema de Vendas e Fidelidade — Cafeteria Geek "Byte & Brew
 
